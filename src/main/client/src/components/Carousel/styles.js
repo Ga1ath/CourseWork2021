@@ -5,14 +5,13 @@ export default makeStyles({
 		margin: "0 13px",
 	},
 	carousel: {
-		padding: "70px 0 0 0",
+		paddingTop: "75px",
 		marginLeft: "auto",
 		marginRight: "auto",
-		width: "60%",
-		//overflow: "hidden"
+		width: "100%",
 	},
 	image: {
-		width: "100%",
+		width: "80%",
 		maxWidth: "400px",
 		height: "auto",
 	},

@@ -9,12 +9,6 @@ import { Typography } from "@material-ui/core";
 
 const Carousel = () => {
 	const classes = useStyles();
-	const settings = {
-		infinite: true,
-		speed: 500,
-		slidesToShow: 1,
-		slidesToScroll: 1
-	};
 
 	return (
 		<section className={classes.container}>
@@ -24,10 +18,10 @@ const Carousel = () => {
 					autoplay
 					autoPlayInterval={3000}
 					centerMode
-					centerPadding={0}
-					// autoplaySpeed={6000}
+					centerPadding={50}
+					autoplaySpeed={6000}
 					// shift={500}
-					// duration={500}
+					duration={500}
 					pauseOnHover={false}
 				>
 					<div id={1}>

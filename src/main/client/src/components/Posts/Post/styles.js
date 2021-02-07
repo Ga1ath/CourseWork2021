@@ -3,21 +3,21 @@ import { makeStyles } from "@material-ui/core";
 export default makeStyles({
 	root: {
 		maxWidth: 270,
+		backgroundColor: 'ButtonFace'
 	},
 	media: {
 		height: 190,
-		overflow: "hidden",
-		'& .image': {
-			transition: ".5s",
-		},
+		transition: ".25s",
 		'&:hover': {
-			'& .image': {
-				transform: "scale(1.5)",
-			}
-		}
+			transform: "scale(1.25)"
+		},
+	},
+	mediaContainer: {
+		overflow: "hidden"
 	},
 
 	content: {
-		padding: "5px 15px"
+		padding: "5px 15px",
+		zIndex: "2"
 	}
 })
