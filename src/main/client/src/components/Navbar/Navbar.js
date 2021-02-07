@@ -6,11 +6,13 @@ import { Toolbar, Typography, AppBar, InputBase } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
+import Carousel from '../Carousel/Carousel';
+
 const Navbar = () => {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.root}>
+		<div>
 			<AppBar className={classes.appBar}>
 				<Toolbar>
 					<IconButton
@@ -40,6 +42,7 @@ const Navbar = () => {
 					</div>
 				</Toolbar>
 			</AppBar>
+			<Carousel />
 		</div>
 	);
 }

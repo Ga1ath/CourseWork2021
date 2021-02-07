@@ -6,7 +6,17 @@ export default makeStyles({
 	},
 	media: {
 		height: 190,
+		overflow: "hidden",
+		'& .image': {
+			transition: ".5s",
+		},
+		'&:hover': {
+			'& .image': {
+				transform: "scale(1.5)",
+			}
+		}
 	},
+
 	content: {
 		padding: "5px 15px"
 	}
