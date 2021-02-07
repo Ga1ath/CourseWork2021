@@ -1,3 +1,7 @@
 import { combineReducers } from 'redux';
 
-export const reducers = combineReducers({});
+import postReducer from './posts';
+
+export const reducers = combineReducers({
+  postReducer
+});

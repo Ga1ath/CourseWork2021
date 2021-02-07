@@ -1,23 +1,28 @@
-import { makeStyles } from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core';
 
-export default makeStyles({
+
+export default makeStyles((theme) => ({
 	container: {
 		margin: "0 13px",
+		height: "100%",
+		[theme.breakpoints.down('sm')]: {
+			display: "none",
+		}
 	},
 	carousel: {
-		paddingTop: "75px",
+		paddingTop: "63px",
 		marginLeft: "auto",
 		marginRight: "auto",
 		width: "100%",
 	},
 	image: {
-		width: "80%",
-		maxWidth: "400px",
-		height: "auto",
+		width: "100%",
+		//maxWidth: "400px",
+		height: "90vh"
 	},
 	imageContainer: {
 		display: "flex",
 		justifyContent: "center",
 		flexDirection: "row"
 }
-})
+}));
