@@ -1,51 +1,51 @@
 package com.example.cinema_booking.models;
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "Film")
+@Table (name = "\"Film\"", schema = "public")
 public class Film {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FilmID")
+    @Column(name = "\"FilmID\"")
     private int FilmID;
 
     @OneToMany(mappedBy = "FilmID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SessionFilm> FilmSessions;
 
-    @Column(name = "FilmName")
+    @Column(name = "\"FilmName\"")
     private String FilmName;
 
-    @Column(name = "ReleaseDate")
+    @Column(name = "\"ReleaseDate\"")
     private Date ReleaseDate;
 
-    @Column(name = "Length")
-    private short Length;
+    @Column(name = "\"LengthOfFilm\"")
+    private short LengthOfFilm;
 
-    @Column(name = "Budget")
+    @Column(name = "\"Budget\"")
     private int Budget;
 
-    @Column(name = "MainRoles")
+    @Column(name = "\"MainRoles\"")
     private String MainRoles;
 
-    @Column(name = "Country")
+    @Column(name = "\"Country\"")
     private String Country;
 
-    @Column(name = "Logo")
-    private ImageIcon Logo;
+    @Column(name = "\"Logo\"")
+    private String Logo;
 
-    @Column(name = "Genre")
+    @Column(name = "\"Genre\"")
     private String Genre;
 
-    public ImageIcon getLogo() {
+    public String getLogo() {
         return Logo;
     }
 
-    public void setLogo(ImageIcon logo) {
+    public void setLogo(String logo) {
         Logo = logo;
     }
 
@@ -61,15 +61,16 @@ public class Film {
 
     }
 
-    public Film(String filmName, Date releaseDate, short length, int budget, String mainRoles, String country, ImageIcon logo, String genre) {
+    public Film(String filmName, Date releaseDate, short lengthOfFilm, int budget, String mainRoles, String country, String logo, String genre) {
         FilmName = filmName;
         ReleaseDate = releaseDate;
-        Length = length;
+        LengthOfFilm = lengthOfFilm;
         Budget = budget;
         MainRoles = mainRoles;
         Country = country;
         Logo = logo;
         Genre = genre;
+        FilmSessions = new ArrayList<>();
     }
 
     public int getFilmID() {
@@ -92,12 +93,12 @@ public class Film {
         ReleaseDate = releaseDate;
     }
 
-    public short getLength() {
-        return Length;
+    public short getLengthOfFilm() {
+        return LengthOfFilm;
     }
 
-    public void setLength(short length) {
-        Length = length;
+    public void setLengthOfFilm(short lengthOfFilm) {
+        LengthOfFilm = lengthOfFilm;
     }
 
     public int getBudget() {
@@ -122,5 +123,13 @@ public class Film {
 
     public void setCountry(String country) {
         Country = country;
+    }
+
+    public List<SessionFilm> getFilmSessions() {
+        return FilmSessions;
+    }
+
+    public void setFilmSessions(List<SessionFilm> filmSessions) {
+        FilmSessions = filmSessions;
     }
 }

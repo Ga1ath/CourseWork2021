@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "Cinema")
+@Table (name = "\"Cinema\"")
 public class Cinema {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CinemaID")
+    @Column(name = "\"CinemaID\"")
     private int CinemaID;
 
-    @Column(name = "Address")
+    @Column(name = "\"Address\"")
     private String Address;
 
-    @Column(name = "PublicName")
+    @Column(name = "\"PublicName\"")
     private String PublicName;
 
     @OneToMany(mappedBy = "CinemaID", cascade = CascadeType.ALL, orphanRemoval = true)

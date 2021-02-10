@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "Row")
+@Table (name = "\"Row\"")
 public class Row {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RowID")
+    @Column(name = "\"RowID\"")
     private int Row_ID;
 
-    @Column(name = "SeatNumber")
+    @Column(name = "\"SeatNumber\"")
     private byte SeatNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HallID")
+    @JoinColumn(name = "`HallID`")
     private Hall HallID;
 
     @OneToMany(mappedBy = "RowID", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,27 +1,28 @@
 package com.example.cinema_booking.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "Customer")
+@Table (name = "\"Customer\"")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CustomerID")
+    @Column(name = "\"CustomerID\"")
     private int CustomerID;
 
     @OneToMany(mappedBy = "CustomerID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> CustomerTickets;
 
-    @Column(name = "Email")
+    @Column(name = "\"Email\"")
     private String Email;
 
-    @Column(name = "FirstName")
+    @Column(name = "\"FirstName\"")
     private String FirstName;
 
-    @Column(name = "LastName")
+    @Column(name = "\"LastName\"")
     private String LastName;
 
     public Customer() {
@@ -32,6 +33,7 @@ public class Customer {
         Email = email;
         FirstName = firstName;
         LastName = lastName;
+        CustomerTickets = new ArrayList<>();
     }
 
     public int getCustomerID() {
@@ -40,6 +42,14 @@ public class Customer {
 
     public String getEmail() {
         return Email;
+    }
+
+    public List<Ticket> getCustomerTickets() {
+        return CustomerTickets;
+    }
+
+    public void setCustomerTickets(List<Ticket> customerTickets) {
+        CustomerTickets = customerTickets;
     }
 
     public void setEmail(String email) {

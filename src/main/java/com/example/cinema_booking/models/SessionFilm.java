@@ -2,39 +2,39 @@ package com.example.cinema_booking.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "SessionFilm")
+@Table(name = "\"SessionFilm\"")
 public class SessionFilm {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SessionID")
+    @Column(name = "\"SessionID\"")
     private int SessionID;
 
     @OneToMany(mappedBy = "SessionID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ticket> CustomerTickets;
+    private List<Ticket> SessionTickets;
 
-    @Column(name = "SessionTime")
+    @Column(name = "\"SessionTime\"")
     private Date SessionTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HallID")
+    @JoinColumn(name = "`HallID`")
     private Hall HallID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FilmID")
+    @JoinColumn(name = "`FilmID`")
     private Film FilmID;
 
     public SessionFilm() {
 
     }
 
-    public SessionFilm(Date sessionTime, Film filmID, Hall hallID) {
+    public SessionFilm(Date sessionTime) {
         SessionTime = sessionTime;
-        FilmID = filmID;
-        HallID = hallID;
+        SessionTickets = new ArrayList<>();
     }
 
     public int getSessionID() {
@@ -49,11 +49,27 @@ public class SessionFilm {
         SessionTime = sessionTime;
     }
 
-    public Film getFilmID() {
-        return FilmID;
+    public List<Ticket> getSessionTickets() {
+        return SessionTickets;
+    }
+
+    public void setSessionTickets(List<Ticket> sessionTickets) {
+        SessionTickets = sessionTickets;
     }
 
     public Hall getHallID() {
         return HallID;
+    }
+
+    public void setHallID(Hall hallID) {
+        HallID = hallID;
+    }
+
+    public Film getFilmID() {
+        return FilmID;
+    }
+
+    public void setFilmID(Film filmID) {
+        FilmID = filmID;
     }
 }
