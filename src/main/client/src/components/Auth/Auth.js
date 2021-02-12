@@ -10,7 +10,6 @@ import { signin, signup } from '../../actions/auth';
 
 const initialState = {
 	firstName: '',
-	lastName: '',
 	email: '',
 	password: '',
 	confirmPassword: ''
@@ -55,50 +54,37 @@ const Auth = () => {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography variant="h6">
-					{isSignup ? "Регистрация" : "Вход"}
+					{isSignup ? "Sign Up" : "Sign In"}
 				</Typography>
 				<form className={classes.form} onSubmit={handleSubmit}>
 					<Grid container spacing={2}>
 						{
-							isSignup && (
-								<>
-									<Input
-										name="firstName"
-										label="Имя"
-										handleChange={handleChange}
-										autoFocus
-										half />
-									<Input
-										name="lastName"
-										label="Фамилия"
-										handleChange={handleChange}
-										autoFocus
-										half />
-								</>
-							)
+							isSignup ?
+							<Input name="firstName" label="Name" handleChange={handleChange} type="name"/>
+							: null
 						}
 						<Input name="email" label="Email" handleChange={handleChange} type="email" />
 						<Input
 							name="password"
-							label="Пароль"
+							label="Password"
 							handleChange={handleChange}
 							type={showPassword ? "text" : "password"}
 							handleShowPassword={handleShowPassword} />
 						{ isSignup ?
 							<Input
 								name="confirmPassword"
-								label="Повторите пароль"
+								label="Confirm Password"
 								handleChange={handleChange}
 								type="password"
 							/> : null}
 					</Grid>
 					<Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-						{isSignup? "Регистрация" : "Вход"}
+						{isSignup? "Sign Up" : "Sign In"}
 					</Button>
 					<Grid container justify="flex-end">
 						<Grid item>
 							<Button onClick={switchMode}>
-								{isSignup? "Уже есть аккаунт? Войти" : "Нет аккаунта? Зарегистрироваться"}
+								{isSignup? "Already have an acc? Sign In" : "Don't have an acc? Sign Up"}
 							</Button>
 						</Grid>
 					</Grid>

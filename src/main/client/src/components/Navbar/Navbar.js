@@ -42,7 +42,6 @@ const Navbar = () => {
 					</div>
 				</Toolbar>
 			</AppBar>
-			<Carousel />
 		</div>
 	);
 }

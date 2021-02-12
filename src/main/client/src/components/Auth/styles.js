@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
 		padding: theme.spacing(3),
 	},
 	avatar: {
-		backgroundColor: "#E3CD81FF",
+		backgroundColor: "black",
 	},
 	form: {
 		width: '100%',
