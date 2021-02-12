@@ -8,15 +8,15 @@ const Footer = () => {
   const classes = useStyles();
 
     return (
-        <AppBar className={classes.appBar}>
-            <Grid item>
-                <Toolbar className={classes.toolbar}>
-                    <Typography variant="body1" color="white">
-                        © 2021 PopugGang
-                    </Typography>
-                </Toolbar>
-            </Grid>
-        </AppBar>
+      <AppBar className={classes.appBar}>
+        <Grid item>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="body1" color="white">
+              © 2021 PopugGang
+            </Typography>
+          </Toolbar>
+        </Grid>
+      </AppBar>
     )
 }
 
