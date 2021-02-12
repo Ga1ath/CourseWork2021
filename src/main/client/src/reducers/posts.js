@@ -1,3 +1,5 @@
+import { FETCH_ALL } from '../constants/actionTypes';
+
 const reducer = (posts = [], action) => {
 	switch (action.type) {
 		case FETCH_ALL:
@@ -6,3 +8,5 @@ const reducer = (posts = [], action) => {
 			return posts;
 	}
 }
+
+export default reducer;

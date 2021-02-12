@@ -3,23 +3,21 @@ import { makeStyles } from "@material-ui/core";
 export default makeStyles({
 	root: {
 		maxWidth: 270,
+		backgroundColor: 'ButtonFace'
 	},
 	media: {
 		height: 190,
-		overflow: "hidden",
-		'& .MuiCardMedia-media': {
-			transition: ".5s",
-		},
+		transition: ".25s",
 		'&:hover': {
-			backgroundColor: "black",
-			'& .MuiCardMedia-media': {
-				transform: "scale(1.5)",
-			}
+			transform: "scale(1.25)"
 		},
-
+	},
+	mediaContainer: {
+		overflow: "hidden"
 	},
 
 	content: {
-		padding: "5px 15px"
+		padding: "5px 15px",
+		zIndex: "2"
 	}
 })
