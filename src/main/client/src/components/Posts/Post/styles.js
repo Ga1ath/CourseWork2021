@@ -7,14 +7,16 @@ export default makeStyles({
 	media: {
 		height: 190,
 		overflow: "hidden",
-		'& .image': {
+		'& .MuiCardMedia-media': {
 			transition: ".5s",
 		},
 		'&:hover': {
-			'& .image': {
+			backgroundColor: "black",
+			'& .MuiCardMedia-media': {
 				transform: "scale(1.5)",
 			}
-		}
+		},
+
 	},
 
 	content: {
