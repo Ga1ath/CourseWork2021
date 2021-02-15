@@ -11,11 +11,13 @@ const Post = ({ post }) => {
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia
-					className={classes.media}
-					image={logo}
-					title={name}
-				/>
+				<div className={classes.mediaContainer}>
+					<CardMedia
+						className={classes.media}
+						image={logo}
+						title={name}
+					/>
+				</div>
 				<CardContent className={classes.content}>
 					<Typography gutterBottom variant="h5" component="h2">
 						{name}
