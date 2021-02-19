@@ -15,8 +15,8 @@ const Posts = () => {
 	return (
 		<Grid container justify={"center"} className={classes.containerGrid}>
 			{posts.map(post => { return (
-				<Grid item xs={12} sm={4} md={3} p={4} style={{padding: "13px"}}>
-					<Post key={post.id} post={post}/>
+				<Grid item xs={12} sm={4} md={3} p={4} style={{padding: "13px"}} key={post.id}>
+					<Post post={post}/>
 				</Grid>
 			)})}
 		</Grid>
