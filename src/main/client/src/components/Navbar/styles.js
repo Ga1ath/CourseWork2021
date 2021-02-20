@@ -66,7 +66,7 @@ export default makeStyles((theme) => ({
 		top: "0",
 		left: "-100%",
 		transition: "850ms",
-		zIndex: "1"
+		zIndex: "2"
 	},
 	navText: {
 		display: "flex",
