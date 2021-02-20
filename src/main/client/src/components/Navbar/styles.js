@@ -45,7 +45,6 @@ export default makeStyles((theme) => ({
 	},
 	inputInput: {
 		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create('width'),
 		width: '100%',
@@ -56,4 +55,60 @@ export default makeStyles((theme) => ({
 			},
 		},
 	},
+	navMenu: {
+		backgroundColor: "black",
+		width: "200px",
+		height: "100vh",
+		display: "flex",
+		justifyContent: "center",
+		paddingTop: "60px",
+		position: "fixed",
+		top: "0",
+		left: "-100%",
+		transition: "850ms",
+		zIndex: "2"
+	},
+	navText: {
+		display: "flex",
+		justifyContent: "start",
+		alignItems: "center",
+		padding: "8px 0px 8px 16px",
+		height: "60px",
+		listStyle: "none",
+		"&:hover": {
+			backgroundColor: "#1a83ff",
+		},
+		"& > a": {
+			textDecoration: "none",
+			color: "#f5f5f5",
+			fontSize: "18px",
+			width: "95%",
+			height: "100%",
+			display: "flex",
+			alignItems: "center",
+			padding: "0 16px",
+			borderRadius: "4px",
+		},
+	},
+	active: {
+		left: "0",
+		transition: "350ms"
+	},
+	navMenuItems: {
+		width: "100%",
+		paddingLeft: "10px"
+	},
+	navbarToggle: {
+		backgroundColor: "black",
+		width: "100%",
+		//height: "80px",
+		display: "flex",
+		justifyContent: "start",
+		alignItems: "center"
+	},
+	menuBars: {
+		marginLeft: "2rem",
+		fontSize: "2rem"
+	},
+
 }));
