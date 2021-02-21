@@ -13,7 +13,7 @@ public class Customer {
     @Column(name = "\"CustomerID\"")
     private int CustomerID;
 
-    @OneToMany(mappedBy = "CustomerID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "CustomerID", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Ticket> CustomerTickets;
 
     @Column(name = "\"Email\"")
@@ -25,14 +25,22 @@ public class Customer {
     @Column(name = "\"LastName\"")
     private String LastName;
 
+    @Column(name = "\"LoginName\"")
+    private String LoginName;
+
+    @Column(name = "\"PasswordHash\"")
+    private String PasswordHash;
+
     public Customer() {
 
     }
 
-    public Customer(String email, String firstName, String lastName) {
+    public Customer(String email, String firstName, String lastName, String loginName, String passwordHash) {
         Email = email;
         FirstName = firstName;
         LastName = lastName;
+        LoginName = loginName;
+        PasswordHash = passwordHash;
         CustomerTickets = new ArrayList<>();
     }
 
@@ -70,5 +78,21 @@ public class Customer {
 
     public void setLastName(String lastName) {
         LastName = lastName;
+    }
+
+    public String getLoginName() {
+        return LoginName;
+    }
+
+    public void setLoginName(String loginName) {
+        LoginName = loginName;
+    }
+
+    public String getPasswordHash() {
+        return PasswordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        PasswordHash = passwordHash;
     }
 }

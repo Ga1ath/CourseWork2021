@@ -2,9 +2,12 @@ package com.example.cinema_booking.services;
 
 import com.example.cinema_booking.dao.CustomerDAOimplementation;
 import com.example.cinema_booking.models.Customer;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+
+@Component
 public class CustomerService {
     private final CustomerDAOimplementation customerDAOimplementation = new CustomerDAOimplementation();
 
@@ -12,16 +15,16 @@ public class CustomerService {
 
     }
 
-    public void addCustomer(Customer customer) {
-        customerDAOimplementation.add(customer);
+    public Exception addCustomer(Customer customer) {
+        return customerDAOimplementation.add(customer);
     }
 
-    public void updateCustomer(Customer customer) {
-        customerDAOimplementation.update(customer);
+    public Exception updateCustomer(Customer customer) {
+        return customerDAOimplementation.update(customer);
     }
 
-    public void deleteCustomer(Customer customer) {
-        customerDAOimplementation.delete(customer);
+    public Exception deleteCustomer(Customer customer) {
+        return customerDAOimplementation.delete(customer);
     }
 
     public Collection<Customer> getAllCustomer() {
@@ -30,5 +33,9 @@ public class CustomerService {
 
     public Customer findByIdCustomer(int id) {
         return customerDAOimplementation.findByID(id);
+    }
+
+    public Customer findByLoginNameCustomer(String loginName) {
+        return customerDAOimplementation.findByLoginName(loginName);
     }
 }

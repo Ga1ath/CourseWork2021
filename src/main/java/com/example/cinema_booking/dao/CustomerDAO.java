@@ -5,8 +5,9 @@ import java.util.Collection;
 
 public interface CustomerDAO {
     Customer findByID(int id);
-    void add(Customer customer);
-    void update(Customer customer);
-    void delete(Customer customer);
+    Customer findByLoginName(String loginName);
+    Exception add(Customer customer);
+    Exception update(Customer customer);
+    Exception delete(Customer customer);
     Collection<Customer> getAll();
 }

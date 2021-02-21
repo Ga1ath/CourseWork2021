@@ -3,6 +3,7 @@ package com.example.cinema_booking.dao;
 import com.example.cinema_booking.models.Customer;
 import com.example.cinema_booking.util.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,16 +11,19 @@ import java.util.List;
 
 public class CustomerDAOimplementation implements CustomerDAO {
     private Session session = null;
+    private Customer customer = null;
 
     @Override
-    public void add(Customer customer) {
+    public Exception add(Customer customer) {
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(customer);
             session.getTransaction().commit();
+            return null;
         } catch (Exception e) {
             System.out.println("Cannot add customer object: " + e.getMessage());
+            return e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -28,14 +32,16 @@ public class CustomerDAOimplementation implements CustomerDAO {
     }
 
     @Override
-    public void update(Customer customer) {
+    public Exception update(Customer customer) {
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(customer);
             session.getTransaction().commit();
+            return null;
         } catch (Exception e) {
             System.out.println("Cannot update customer object: " + e.getMessage());
+            return e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -44,14 +50,16 @@ public class CustomerDAOimplementation implements CustomerDAO {
     }
 
     @Override
-    public void delete(Customer customer) {
+    public Exception delete(Customer customer) {
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             session.delete(customer);
             session.getTransaction().commit();
+            return null;
         } catch (Exception e) {
             System.out.println("Cannot delete customer object: " + e.getMessage());
+            return e;
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -77,12 +85,29 @@ public class CustomerDAOimplementation implements CustomerDAO {
 
     @Override
     public Customer findByID(int id) {
-        Customer customer = null;
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             customer = session.get(Customer.class, id);
         } catch (Exception e) {
-            System.out.println("Cannot get customer object by id: " + e.getMessage());
+            System.out.println("Cannot get customer object by ID: " + e.getMessage());
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return customer;
+    }
+
+    @Override
+    public Customer findByLoginName(String loginName) {
+        try {
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            Query query = session.createQuery(
+                    "select c from Customer c where c.LoginName=:loginName", Customer.class);
+            query.setParameter("loginName", loginName);
+            customer = (Customer) query.uniqueResult();
+        } catch (Exception e) {
+            System.out.println("Cannot get customer object by LoginName: " + e.getMessage());
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
