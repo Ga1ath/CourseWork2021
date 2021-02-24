@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useStyles from './styles';
 import { Card, CardActionArea, CardActions, CardContent, CardMedia } from '@material-ui/core';
 import { Button, Typography } from '@material-ui/core';
 
 const Post = ({ post }) => {
-	const { logo, name, genre } = post;
+	const { id, logo, name, genre } = post;
 
 	const classes = useStyles();
 
 	return (
 		<Card className={classes.root}>
-			<CardActionArea>
+			<CardActionArea component={Link} to={`/sessions/${id}`}>
 				<div className={classes.mediaContainer}>
 					<CardMedia
 						className={classes.media}
