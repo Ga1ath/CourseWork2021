@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useStyles from './styles';
 import logo from '../../images/logo.png';
 import IconButton from "@material-ui/core/IconButton";
-import { Toolbar, Typography, AppBar, InputBase } from "@material-ui/core";
+import { Toolbar, Typography, AppBar, InputBase, Button } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { SidebarData } from './SidebarData';
-import * as AiIcons from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { getPosts, filterPosts } from '../../actions/posts';
 
 const Navbar = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 	const [showSidebar, setShowSidebar] = useState(false);
+	const [search, setSearch] = useState("");
 
 	const toggleSidebar = () => {
 		setShowSidebar(!showSidebar);
 	}
+
+	useEffect(() => {
+		dispatch(getPosts());
+		if (search) {
+			dispatch(filterPosts(search));
+		}
+	}, [search])
 
 	return (
 		<>
@@ -26,10 +36,13 @@ const Navbar = () => {
 						className={classes.menuButton}
 						color="inherit"
 						aria-label="open drawer"
+						onClick={toggleSidebar}
 					>
-						<MenuIcon onClick={toggleSidebar}/>
+						<MenuIcon />
 					</IconButton>
-					<img src={logo} alt="icon" height="50" />
+					<Link to="/">
+						<img src={logo} alt="icon" height="50" />
+					</Link>
 					<Typography className={classes.title} variant="h6">
 						&nbsp; (((CringeCinema)))
 					</Typography>
@@ -44,6 +57,8 @@ const Navbar = () => {
 								input: classes.inputInput,
 							}}
 							inputProps={{ 'aria-label': 'search' }}
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
 						/>
 					</div>
 				</Toolbar>

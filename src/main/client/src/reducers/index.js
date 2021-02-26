@@ -5,5 +5,7 @@ import authReducer from './auth';
 import sessionReducer from './sessions';
 
 export const reducers = combineReducers({
-  postReducer, authReducer, sessionReducer
+  posts: postReducer,
+  authReducer,
+  sessionReducer
 });

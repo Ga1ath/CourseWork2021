@@ -11,7 +11,7 @@ const Footer = () => {
       <AppBar className={classes.appBar}>
         <Grid item>
           <Toolbar className={classes.toolbar}>
-            <Typography variant="body1" color="white">
+            <Typography variant="body1">
               © 2021 PopugGang
             </Typography>
           </Toolbar>
