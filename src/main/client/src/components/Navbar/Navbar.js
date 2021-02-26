@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import logo from '../../images/logo.png';
-import IconButton from "@material-ui/core/IconButton";
-import { Toolbar, Typography, AppBar, InputBase, Button } from "@material-ui/core";
+import { Toolbar, Typography, AppBar, InputBase, IconButton } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { SidebarData } from './SidebarData';
@@ -46,21 +45,24 @@ const Navbar = () => {
 					<Typography className={classes.title} variant="h6">
 						&nbsp; (((CringeCinema)))
 					</Typography>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
-						</div>
-						<InputBase
-							placeholder="Search…"
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ 'aria-label': 'search' }}
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-						/>
-					</div>
+					{
+						useLocation().pathname === "/" ?
+							<div className={classes.search}>
+								<div className={classes.searchIcon}>
+									<SearchIcon />
+								</div>
+								<InputBase
+									placeholder="Search…"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput,
+									}}
+									inputProps={{ 'aria-label': 'search' }}
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+								/>
+							</div> : null
+					}
 				</Toolbar>
 			</AppBar>
 			<nav className={showSidebar ? `${classes.navMenu} ${classes.active}` : `${classes.navMenu}`}>

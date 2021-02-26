@@ -1,0 +1,53 @@
+.mainSlider h1, .mainSlider p {
+    position: absolute;
+    z-index: 10;
+    color: #fff;
+    top: calc(50% - 1.5em);
+    left: 50px;
+}
+
+.mainSlider p {
+    font-size: 30px;
+    top: calc(50% - 20px);
+}
+.mainSlider img {
+    z-index: 5;
+    position: relative;
+}
+
+.mainSlider button {
+    z-index: 5;
+    position: absolute !important;
+    top: calc(50% + 40px);
+    left: 50px;
+    position: relative;
+}
+
+
+/* Слайдер */
+.slick-slider{}
+/* Слайдер запущен */
+.slick-slider.slick-initialized{}
+/* Слайдер с точками */
+.slick-slider.slick-dotted{}
+/* Ограничивающая оболочка */
+.slick-list {
+    display: flex;
+    overflow-x: hidden;
+}
+/* Лента слайдов */
+.slick-track{
+    display: flex;
+}
+/* Слайд */
+.slick-slide{
+    position: relative;
+}
+/* Слайд активный (показывается) */
+.slick-slide.slick-active{}
+/* Слайд основной */
+.slick-slide.slick-current{}
+/* Слайд по центру */
+.slick-slide.slick-center{}
+/* Клонированный слайд */
+.slick-slide.slick-cloned{}

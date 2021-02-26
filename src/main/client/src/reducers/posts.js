@@ -5,7 +5,7 @@ const reducer = (posts = [], action) => {
 		case FETCH_ALL:
 			return action.payload;
 		case FILTER_POSTS:
-			return posts.filter(post => post.name.includes(action?.filter));
+			return posts.filter(post => post.name.toLowerCase().includes(action?.filter.toLowerCase()));
 		default:
 			return posts;
 	}
