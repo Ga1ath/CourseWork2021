@@ -6,18 +6,33 @@ import { Toolbar, Typography, AppBar, InputBase, IconButton } from "@material-ui
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { SidebarData } from './SidebarData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, filterPosts } from '../../actions/posts';
+import { showMenu, hideMenu } from "../../actions/menu";
 
 const Navbar = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const [showSidebar, setShowSidebar] = useState(false);
+	const { showSidebar } = useSelector(state => state.menu);
 	const [search, setSearch] = useState("");
 
 	const toggleSidebar = () => {
-		setShowSidebar(!showSidebar);
+		if (showSidebar) {
+			dispatch(hideMenu());
+		} else {
+			dispatch(showMenu());
+		}
 	}
+
+	useEffect(() => {
+		if (showSidebar) {
+			document.addEventListener("click", toggleSidebar);
+			return () => {
+				document.removeEventListener("click", toggleSidebar);
+			}
+		}
+
+	}, [showSidebar])
 
 	useEffect(() => {
 		dispatch(getPosts());
@@ -36,6 +51,7 @@ const Navbar = () => {
 						color="inherit"
 						aria-label="open drawer"
 						onClick={toggleSidebar}
+
 					>
 						<MenuIcon />
 					</IconButton>
