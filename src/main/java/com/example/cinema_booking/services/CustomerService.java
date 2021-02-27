@@ -31,11 +31,7 @@ public class CustomerService {
         return customerDAOimplementation.getAll();
     }
 
-    public Customer findByIdCustomer(int id) {
+    public Customer findByIdCustomer(String id) {
         return customerDAOimplementation.findByID(id);
-    }
-
-    public Customer findByLoginNameCustomer(String loginName) {
-        return customerDAOimplementation.findByLoginName(loginName);
     }
 }

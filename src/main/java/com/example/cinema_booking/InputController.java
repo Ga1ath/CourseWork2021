@@ -6,6 +6,7 @@ import com.example.cinema_booking.services.CustomerService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class InputController {
     @GetMapping
     public ResponseEntity<HashMap<String, String>> getInfoAboutFilm(
             @RequestParam(name = "filmName", defaultValue = "AvengersInfinityWar") String filmName
-    ) throws UnirestException {
+    ) throws UnirestException, JSONException {
 
         // getting basic info about film by name (+ film ID in IMDB)
         HttpResponse<String> response = Unirest.get("https://imdb8.p.rapidapi.com/title/auto-complete?q=" + filmName)
@@ -74,7 +75,7 @@ public class InputController {
             @RequestBody Map<String, String> userInfo
     ) {
         String loginName = userInfo.get("LoginName");
-        if (customerService.findByLoginNameCustomer(loginName) != null) {
+        if (customerService.findByIdCustomer(loginName) != null) {
             HashMap<String, String> cause = new HashMap<>();
             cause.put("Cause", "Customer with this LoginName already exists");
             return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
@@ -100,7 +101,7 @@ public class InputController {
             @RequestBody Map<String, String> userInfo
     ) {
         String loginName = userInfo.get("LoginName");
-        Customer customer = customerService.findByLoginNameCustomer(loginName);
+        Customer customer = customerService.findByIdCustomer(loginName);
         if (customer == null) {
             HashMap<String, String> cause = new HashMap<>();
             cause.put("Cause", "Customer with this LoginName does not exist");

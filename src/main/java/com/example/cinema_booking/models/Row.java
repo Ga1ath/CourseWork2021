@@ -20,16 +20,12 @@ public class Row {
     @JoinColumn(name = "`HallID`")
     private Hall HallID;
 
-    @OneToMany(mappedBy = "RowID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Seat> RowSeats;
-
     public Row() {
 
     }
 
     public Row(byte seatNumber) {
         SeatNumber = seatNumber;
-        RowSeats = new ArrayList<>();
     }
 
     public int getRow_ID() {
@@ -42,14 +38,6 @@ public class Row {
 
     public void setSeatNumber(byte seatNumber) {
         SeatNumber = seatNumber;
-    }
-
-    public List<Seat> getRowSeats() {
-        return RowSeats;
-    }
-
-    public void setRowSeats(List<Seat> rowSeats) {
-        RowSeats = rowSeats;
     }
 
     public Hall getHallID() {

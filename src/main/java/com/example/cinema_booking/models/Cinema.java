@@ -19,9 +19,6 @@ public class Cinema {
     @Column(name = "\"PublicName\"")
     private String PublicName;
 
-    @OneToMany(mappedBy = "CinemaID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Hall> CinemaHalls;
-
     public Cinema() {
 
     }
@@ -29,7 +26,6 @@ public class Cinema {
     public Cinema(String address, String publicName) {
         Address = address;
         PublicName = publicName;
-        CinemaHalls = new ArrayList<>();
     }
 
     public int getCinemaID() {
@@ -38,14 +34,6 @@ public class Cinema {
 
     public String getAddress() {
         return Address;
-    }
-
-    public List<Hall> getCinemaHalls() {
-        return CinemaHalls;
-    }
-
-    public void setCinemaHalls(List<Hall> cinemaHalls) {
-        CinemaHalls = cinemaHalls;
     }
 
     public void setAddress(String address) {

@@ -2,20 +2,11 @@ package com.example.cinema_booking.models;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Table (name = "\"Film\"", schema = "public")
 public class Film {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "\"FilmID\"")
-    private int FilmID;
-
-    @OneToMany(mappedBy = "FilmID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SessionFilm> FilmSessions;
 
     @Column(name = "\"FilmName\"")
     private String FilmName;
@@ -26,14 +17,8 @@ public class Film {
     @Column(name = "\"LengthOfFilm\"")
     private short LengthOfFilm;
 
-    @Column(name = "\"Budget\"")
-    private int Budget;
-
     @Column(name = "\"MainRoles\"")
     private String MainRoles;
-
-    @Column(name = "\"Country\"")
-    private String Country;
 
     @Column(name = "\"Logo\"")
     private String Logo;
@@ -41,40 +26,40 @@ public class Film {
     @Column(name = "\"Genre\"")
     private String Genre;
 
-    public String getLogo() {
-        return Logo;
-    }
+    @Id
+    @Column(name = "\"FilmIMDB\"")
+    private String FilmIMDB;
 
-    public void setLogo(String logo) {
-        Logo = logo;
-    }
+    @Column(name = "\"ReleaseYear\"")
+    private String ReleaseYear;
 
-    public String getGenre() {
-        return Genre;
-    }
+    @Column(name = "\"Rated\"")
+    private String Rated;
 
-    public void setGenre(String genre) {
-        Genre = genre;
-    }
+    @Column(name = "\"Director\"")
+    private String Director;
+
+    @Column(name = "\"Plot\"")
+    private String Plot;
 
     public Film() {
 
     }
 
-    public Film(String filmName, Date releaseDate, short lengthOfFilm, int budget, String mainRoles, String country, String logo, String genre) {
+    public Film(String filmName, Date releaseDate, short lengthOfFilm,
+                String mainRoles, String logo, String genre, String filmIMDB,
+                String releaseYear, String rated, String director, String plot) {
         FilmName = filmName;
         ReleaseDate = releaseDate;
         LengthOfFilm = lengthOfFilm;
-        Budget = budget;
         MainRoles = mainRoles;
-        Country = country;
         Logo = logo;
         Genre = genre;
-        FilmSessions = new ArrayList<>();
-    }
-
-    public int getFilmID() {
-        return FilmID;
+        FilmIMDB = filmIMDB;
+        ReleaseYear = releaseYear;
+        Rated = rated;
+        Director = director;
+        Plot = plot;
     }
 
     public String getFilmName() {
@@ -101,14 +86,6 @@ public class Film {
         LengthOfFilm = lengthOfFilm;
     }
 
-    public int getBudget() {
-        return Budget;
-    }
-
-    public void setBudget(int budget) {
-        Budget = budget;
-    }
-
     public String getMainRoles() {
         return MainRoles;
     }
@@ -117,19 +94,59 @@ public class Film {
         MainRoles = mainRoles;
     }
 
-    public String getCountry() {
-        return Country;
+    public String getLogo() {
+        return Logo;
     }
 
-    public void setCountry(String country) {
-        Country = country;
+    public void setLogo(String logo) {
+        Logo = logo;
     }
 
-    public List<SessionFilm> getFilmSessions() {
-        return FilmSessions;
+    public String getGenre() {
+        return Genre;
     }
 
-    public void setFilmSessions(List<SessionFilm> filmSessions) {
-        FilmSessions = filmSessions;
+    public void setGenre(String genre) {
+        Genre = genre;
+    }
+
+    public String getFilmIMDB() {
+        return FilmIMDB;
+    }
+
+    public void setFilmIMDB(String filmIMDB) {
+        FilmIMDB = filmIMDB;
+    }
+
+    public String getReleaseYear() {
+        return ReleaseYear;
+    }
+
+    public void setReleaseYear(String releaseYear) {
+        ReleaseYear = releaseYear;
+    }
+
+    public String getRated() {
+        return Rated;
+    }
+
+    public void setRated(String rated) {
+        Rated = rated;
+    }
+
+    public String getDirector() {
+        return Director;
+    }
+
+    public void setDirector(String director) {
+        Director = director;
+    }
+
+    public String getPlot() {
+        return Plot;
+    }
+
+    public void setPlot(String plot) {
+        Plot = plot;
     }
 }

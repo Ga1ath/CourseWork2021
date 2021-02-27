@@ -3,11 +3,11 @@ package com.example.cinema_booking.dao;
 import com.example.cinema_booking.models.Customer;
 import com.example.cinema_booking.util.HibernateSessionFactory;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 
 public class CustomerDAOimplementation implements CustomerDAO {
     private Session session = null;
@@ -84,30 +84,12 @@ public class CustomerDAOimplementation implements CustomerDAO {
     }
 
     @Override
-    public Customer findByID(int id) {
+    public Customer findByID(String id) {
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             customer = session.get(Customer.class, id);
         } catch (Exception e) {
             System.out.println("Cannot get customer object by ID: " + e.getMessage());
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return customer;
-    }
-
-    @Override
-    public Customer findByLoginName(String loginName) {
-        try {
-            session = HibernateSessionFactory.getSessionFactory().openSession();
-            Query query = session.createQuery(
-                    "select c from Customer c where c.LoginName=:loginName", Customer.class);
-            query.setParameter("loginName", loginName);
-            customer = (Customer) query.uniqueResult();
-        } catch (Exception e) {
-            System.out.println("Cannot get customer object by LoginName: " + e.getMessage());
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

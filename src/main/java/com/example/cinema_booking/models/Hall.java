@@ -13,9 +13,6 @@ public class Hall {
     @Column(name = "\"HallID\"")
     private int HallID;
 
-    @OneToMany(mappedBy = "HallID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Hall> HallSessions;
-
     @Column(name = "\"RowsNumber\"")
     private byte RowsNumber;
 
@@ -23,17 +20,12 @@ public class Hall {
     @JoinColumn(name = "`CinemaID`")
     private Cinema CinemaID;
 
-    @OneToMany(mappedBy = "HallID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Hall> HallRows;
-
     public Hall() {
 
     }
 
     public Hall(byte rowsNumber) {
         RowsNumber = rowsNumber;
-        HallRows = new ArrayList<>();
-        HallSessions = new ArrayList<>();
     }
 
     public int getHallID() {
@@ -54,21 +46,5 @@ public class Hall {
 
     public void setCinemaID(Cinema cinemaID) {
         CinemaID = cinemaID;
-    }
-
-    public List<Hall> getHallRows() {
-        return HallRows;
-    }
-
-    public void setHallRows(List<Hall> hallRows) {
-        HallRows = hallRows;
-    }
-
-    public List<Hall> getHallSessions() {
-        return HallSessions;
-    }
-
-    public void setHallSessions(List<Hall> hallSessions) {
-        HallSessions = hallSessions;
     }
 }

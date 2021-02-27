@@ -13,15 +13,12 @@ public class Seat {
     @Column(name = "\"SeatID\"")
     private int SeatID;
 
-    @OneToMany(mappedBy = "SeatID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ticket> SeatTickets;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`RowID`")
     private Row RowID;
 
     public Seat() {
-        SeatTickets = new ArrayList<>();
+
     }
 
     public int getSeatID() {
@@ -34,13 +31,5 @@ public class Seat {
 
     public void setRowID(Row rowID) {
         RowID = rowID;
-    }
-
-    public List<Ticket> getSeatTickets() {
-        return SeatTickets;
-    }
-
-    public void setSeatTickets(List<Ticket> seatTickets) {
-        SeatTickets = seatTickets;
     }
 }

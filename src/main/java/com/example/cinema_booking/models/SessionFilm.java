@@ -2,8 +2,7 @@ package com.example.cinema_booking.models;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Table(name = "\"SessionFilm\"")
@@ -13,9 +12,6 @@ public class SessionFilm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "\"SessionID\"")
     private int SessionID;
-
-    @OneToMany(mappedBy = "SessionID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ticket> SessionTickets;
 
     @Column(name = "\"SessionTime\"")
     private Date SessionTime;
@@ -34,7 +30,6 @@ public class SessionFilm {
 
     public SessionFilm(Date sessionTime) {
         SessionTime = sessionTime;
-        SessionTickets = new ArrayList<>();
     }
 
     public int getSessionID() {
@@ -47,14 +42,6 @@ public class SessionFilm {
 
     public void setSessionTime(Date sessionTime) {
         SessionTime = sessionTime;
-    }
-
-    public List<Ticket> getSessionTickets() {
-        return SessionTickets;
-    }
-
-    public void setSessionTickets(List<Ticket> sessionTickets) {
-        SessionTickets = sessionTickets;
     }
 
     public Hall getHallID() {
