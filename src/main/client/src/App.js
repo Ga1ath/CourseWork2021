@@ -9,6 +9,8 @@ import Auth from "./components/Auth/Auth";
 import './index.css';
 import Sessions from './components/Sessions/Sessions';
 
+
+
 const SessionsPage = () => {
 
   let { id } = useParams();
