@@ -28,6 +28,11 @@ public class Hall {
         RowsNumber = rowsNumber;
     }
 
+    public Hall(byte rowsNumber, Cinema cinemaID) {
+        RowsNumber = rowsNumber;
+        CinemaID = cinemaID;
+    }
+
     public int getHallID() {
         return HallID;
     }

@@ -1,7 +1,6 @@
 package com.example.cinema_booking.models;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 
 @Entity
@@ -12,10 +11,10 @@ public class Film {
     private String FilmName;
 
     @Column(name = "\"ReleaseDate\"")
-    private Date ReleaseDate;
+    private String ReleaseDate;
 
     @Column(name = "\"LengthOfFilm\"")
-    private short LengthOfFilm;
+    private String LengthOfFilm;
 
     @Column(name = "\"MainRoles\"")
     private String MainRoles;
@@ -28,7 +27,7 @@ public class Film {
 
     @Id
     @Column(name = "\"FilmIMDB\"")
-    private String FilmIMDB;
+    private Integer FilmIMDB;
 
     @Column(name = "\"ReleaseYear\"")
     private String ReleaseYear;
@@ -46,8 +45,8 @@ public class Film {
 
     }
 
-    public Film(String filmName, Date releaseDate, short lengthOfFilm,
-                String mainRoles, String logo, String genre, String filmIMDB,
+    public Film(String filmName, String releaseDate, String lengthOfFilm,
+                String mainRoles, String logo, String genre, Integer filmIMDB,
                 String releaseYear, String rated, String director, String plot) {
         FilmName = filmName;
         ReleaseDate = releaseDate;
@@ -70,19 +69,19 @@ public class Film {
         FilmName = filmName;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return ReleaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         ReleaseDate = releaseDate;
     }
 
-    public short getLengthOfFilm() {
+    public String getLengthOfFilm() {
         return LengthOfFilm;
     }
 
-    public void setLengthOfFilm(short lengthOfFilm) {
+    public void setLengthOfFilm(String lengthOfFilm) {
         LengthOfFilm = lengthOfFilm;
     }
 
@@ -110,11 +109,11 @@ public class Film {
         Genre = genre;
     }
 
-    public String getFilmIMDB() {
+    public Integer getFilmIMDB() {
         return FilmIMDB;
     }
 
-    public void setFilmIMDB(String filmIMDB) {
+    public void setFilmIMDB(Integer filmIMDB) {
         FilmIMDB = filmIMDB;
     }
 

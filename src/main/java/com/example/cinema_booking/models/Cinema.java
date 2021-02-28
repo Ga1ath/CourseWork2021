@@ -1,8 +1,7 @@
 package com.example.cinema_booking.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Table (name = "\"Cinema\"")

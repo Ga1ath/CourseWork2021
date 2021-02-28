@@ -21,6 +21,10 @@ public class Seat {
 
     }
 
+    public Seat(Row rowID) {
+        RowID = rowID;
+    }
+
     public int getSeatID() {
         return SeatID;
     }

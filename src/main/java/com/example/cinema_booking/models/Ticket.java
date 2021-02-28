@@ -27,6 +27,12 @@ public class Ticket {
 
     }
 
+    public Ticket(Seat seatID, SessionFilm sessionID, Customer customerID) {
+        SeatID = seatID;
+        SessionID = sessionID;
+        CustomerID = customerID;
+    }
+
     public int getTicketID() {
         return TicketID;
     }

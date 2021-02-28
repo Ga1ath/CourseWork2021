@@ -1,8 +1,7 @@
 package com.example.cinema_booking.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Table (name = "\"Row\"")
@@ -11,7 +10,7 @@ public class Row {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "\"RowID\"")
-    private int Row_ID;
+    private int RowID;
 
     @Column(name = "\"SeatNumber\"")
     private byte SeatNumber;
@@ -28,8 +27,13 @@ public class Row {
         SeatNumber = seatNumber;
     }
 
-    public int getRow_ID() {
-        return Row_ID;
+    public Row(byte seatNumber, Hall hallID) {
+        SeatNumber = seatNumber;
+        HallID = hallID;
+    }
+
+    public int getRowID() {
+        return RowID;
     }
 
     public byte getSeatNumber() {

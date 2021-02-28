@@ -2,10 +2,16 @@ package com.example.cinema_booking;
 
 
 import com.example.cinema_booking.models.Customer;
+import com.example.cinema_booking.models.Film;
+import com.example.cinema_booking.models.SessionFilm;
 import com.example.cinema_booking.services.CustomerService;
+import com.example.cinema_booking.services.FilmService;
+import com.example.cinema_booking.util.HibernateSessionFactory;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,13 +35,30 @@ public class InputController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private FilmService filmService;
+
     @GetMapping
-    public ResponseEntity<HashMap<String, String>> getInfoAboutFilm(
-            @RequestParam(name = "filmName", defaultValue = "AvengersInfinityWar") String filmName
+    public ResponseEntity<HashMap<String, Object>> getInfoAboutFilm(
+            @RequestParam(name = "filmName", defaultValue = "Avengers Infinity War") String filmName
     ) throws UnirestException, JSONException {
 
+        // checking existence film in DB
+        Film film = filmService.findByNameFilm(filmName);
+        if (film != null) {
+            // creating HaspMap response to client
+            HashMap<String, Object> response_to_client = new HashMap<>();
+            response_to_client.put("ID", film.getFilmIMDB());
+            response_to_client.put("Title", filmName);
+            response_to_client.put("Genre", film.getGenre());
+            response_to_client.put("Logo", film.getLogo());
+            return new ResponseEntity<>(response_to_client, HttpStatus.OK);
+        }
+
+        String filmNameHTTP = filmName.replaceAll("\\s+", "%20");
         // getting basic info about film by name (+ film ID in IMDB)
-        HttpResponse<String> response = Unirest.get("https://imdb8.p.rapidapi.com/title/auto-complete?q=" + filmName)
+        HttpResponse<String> response = Unirest
+                .get("https://imdb8.p.rapidapi.com/title/auto-complete?q=" + filmNameHTTP)
                 .header("x-rapidapi-key", "f3e55c08ddmsh1a3452690bf39ecp1c7681jsnd926d8c78dde")
                 .header("x-rapidapi-host", "imdb8.p.rapidapi.com")
                 .asString();
@@ -41,7 +66,7 @@ public class InputController {
         // extracting info about film as JSON object
         JSONObject info_about_film = new JSONObject(response.getBody());
 
-        // getting title, logo, ID
+        // getting logo, ID
         String film_title = info_about_film.getJSONArray("d").getJSONObject(0).
                 getString("l");
         String film_logo = info_about_film.getJSONArray("d").getJSONObject(0).
@@ -61,11 +86,26 @@ public class InputController {
         String film_genre = full_info_about_film.getString("Genre");
 
         // creating HaspMap response to client
-        HashMap<String, String> response_to_client = new HashMap<>();
-        response_to_client.put("ID", film_id);
+        HashMap<String, Object> response_to_client = new HashMap<>();
+        response_to_client.put("ID", Integer.parseInt(film_id.substring(2)));
         response_to_client.put("Title", film_title);
         response_to_client.put("Genre", film_genre);
         response_to_client.put("Logo", film_logo);
+
+        // Adding film to DB
+        filmService.addFilm(new Film(
+                film_title,
+                full_info_about_film.getString("Released"),
+                full_info_about_film.getString("Runtime"),
+                full_info_about_film.getString("Actors"),
+                film_logo,
+                film_genre,
+                Integer.parseInt(film_id.substring(2)),
+                full_info_about_film.getString("Year"),
+                full_info_about_film.getString("Rated"),
+                full_info_about_film.getString("Director"),
+                full_info_about_film.getString("Plot")
+        ));
 
         return new ResponseEntity<>(response_to_client, HttpStatus.OK);
     }
@@ -117,4 +157,48 @@ public class InputController {
         return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/sessions", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<HashMap<String, Object>>> getSessionsByFilm(
+            @RequestParam(name = "filmID") Integer filmID
+    ) {
+        Film film = filmService.findByIdFilm(filmID);
+        if (film == null) {
+            ArrayList<HashMap<String, Object>> cause = new ArrayList<>();
+            HashMap<String, Object> message = new HashMap<>();
+            message.put("Cause", "Film with this ID does not exist");
+            cause.add(message);
+            return new ResponseEntity<>(cause, HttpStatus.NOT_FOUND);
+        }
+
+        Session session = null;
+        List<SessionFilm> sessionFilms = null;
+        try {
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            Query<SessionFilm> query = session.createQuery(
+                    "select s from SessionFilm s where s.FilmIMDB =: filmID");
+            query.setParameter("filmID", filmID);
+            sessionFilms = query.getResultList();
+        } catch (Exception e) {
+            System.out.println("Cannot find session objects by filmID: " + e.getMessage());
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+        ArrayList<HashMap<String, Object>> result = new ArrayList<>();
+        if (sessionFilms != null) {
+            for (SessionFilm sessionFilm : sessionFilms) {
+                HashMap<String, Object> currentSessionFilm = new HashMap<>();
+                currentSessionFilm.put("SessionID", sessionFilm.getSessionID());
+                currentSessionFilm.put("HallID", sessionFilm.getHallID());
+                currentSessionFilm.put("FilmID", sessionFilm.getFilmIMDB());
+                currentSessionFilm.put("SessionDate", sessionFilm.getSessionDate());
+                currentSessionFilm.put("SessionTime", sessionFilm.getSessionTime());
+                result.add(currentSessionFilm);
+            }
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

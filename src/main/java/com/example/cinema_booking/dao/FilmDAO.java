@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public interface FilmDAO {
     Film findByID(int id);
+    Film findByName(String name);
     void add(Film film);
     void update(Film film);
     void delete(Film film);

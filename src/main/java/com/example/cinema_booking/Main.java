@@ -1,5 +1,9 @@
 package com.example.cinema_booking;
 
+import com.example.cinema_booking.models.SessionFilm;
+import com.example.cinema_booking.services.FilmService;
+import com.example.cinema_booking.services.HallService;
+import com.example.cinema_booking.services.SessionFilmService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -50,6 +54,15 @@ public class Main {
 //        response_to_client.put("Genre", film_genre);
 //        response_to_client.put("Logo", film_logo);
 
+        HallService hallService = new HallService();
+        FilmService filmService = new FilmService();
 
+        SessionFilmService sessionFilmService = new SessionFilmService();
+        sessionFilmService.addSessionFilm(new SessionFilm(
+            "04:20",
+                "January 14th",
+                hallService.findByIdHall(1),
+                filmService.findByIdFilm(4154756)
+        ));
     }
 }

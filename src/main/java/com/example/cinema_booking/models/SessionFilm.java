@@ -1,7 +1,6 @@
 package com.example.cinema_booking.models;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 
 @Entity
@@ -11,37 +10,56 @@ public class SessionFilm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "\"SessionID\"")
-    private int SessionID;
+    private Integer SessionID;
 
     @Column(name = "\"SessionTime\"")
-    private Date SessionTime;
+    private String SessionTime;
+
+    @Column(name = "\"SessionDate\"")
+    private String SessionDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`HallID`")
     private Hall HallID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`FilmID`")
-    private Film FilmID;
+    @JoinColumn(name = "`FilmIMDB`")
+    private Film FilmIMDB;
 
     public SessionFilm() {
 
     }
 
-    public SessionFilm(Date sessionTime) {
+    public SessionFilm(String sessionTime, String sessionDate) {
         SessionTime = sessionTime;
+        SessionDate = sessionDate;
     }
 
-    public int getSessionID() {
+    public SessionFilm(String sessionTime, String sessionDate, Hall hallID, Film filmIMDB) {
+        SessionTime = sessionTime;
+        SessionDate = sessionDate;
+        HallID = hallID;
+        FilmIMDB = filmIMDB;
+    }
+
+    public Integer getSessionID() {
         return SessionID;
     }
 
-    public Date getSessionTime() {
+    public String getSessionTime() {
         return SessionTime;
     }
 
-    public void setSessionTime(Date sessionTime) {
+    public void setSessionTime(String sessionTime) {
         SessionTime = sessionTime;
+    }
+
+    public String getSessionDate() {
+        return SessionDate;
+    }
+
+    public void setSessionDate(String sessionDate) {
+        SessionDate = sessionDate;
     }
 
     public Hall getHallID() {
@@ -52,11 +70,11 @@ public class SessionFilm {
         HallID = hallID;
     }
 
-    public Film getFilmID() {
-        return FilmID;
+    public Film getFilmIMDB() {
+        return FilmIMDB;
     }
 
-    public void setFilmID(Film filmID) {
-        FilmID = filmID;
+    public void setFilmIMDB(Film filmIMDB) {
+        FilmIMDB = filmIMDB;
     }
 }

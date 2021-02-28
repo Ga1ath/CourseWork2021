@@ -2,9 +2,12 @@ package com.example.cinema_booking.services;
 
 import com.example.cinema_booking.dao.FilmDAOimplementation;
 import com.example.cinema_booking.models.Film;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+
+@Component
 public class FilmService {
     private final FilmDAOimplementation filmDAOimplementation = new FilmDAOimplementation();
 
@@ -30,5 +33,9 @@ public class FilmService {
 
     public Film findByIdFilm(int id) {
         return filmDAOimplementation.findByID(id);
+    }
+
+    public Film findByNameFilm(String name) {
+        return filmDAOimplementation.findByName(name);
     }
 }
