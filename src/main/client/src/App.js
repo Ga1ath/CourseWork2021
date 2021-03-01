@@ -8,6 +8,7 @@ import Auth from "./components/Auth/Auth";
 
 import './index.css';
 import Sessions from './components/Sessions/Sessions';
+import Layout from "./components/Layout/Layout";
 
 const SessionsPage = () => {
 
@@ -19,6 +20,7 @@ function App() {
   return (
     <Router>
       <div className="content">
+        <Layout />
         <Navbar />
 
         <Switch>

@@ -13,12 +13,12 @@ export default makeStyles((theme) => ({
 		paddingTop: "63px",
 		marginLeft: "auto",
 		marginRight: "auto",
-		width: "100%",
+		width: "50%",
 	},
 	image: {
-		width: "100%",
-		//maxWidth: "400px",
-		height: "90vh"
+		//width: "100%",
+		maxWidth: "400px",
+		//height: "87vh"
 	},
 	imageContainer: {
 		display: "flex",

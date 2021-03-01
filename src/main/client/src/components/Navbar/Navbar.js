@@ -1,21 +1,45 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import logo from '../../images/logo.png';
-import IconButton from "@material-ui/core/IconButton";
-import { Toolbar, Typography, AppBar, InputBase } from "@material-ui/core";
+import { Toolbar, Typography, AppBar, InputBase, IconButton } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { SidebarData } from './SidebarData';
-import * as AiIcons from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts, filterPosts } from '../../actions/posts';
+import { showMenu, hideMenu } from "../../actions/menu";
 
 const Navbar = () => {
 	const classes = useStyles();
-	const [showSidebar, setShowSidebar] = useState(false);
+	const dispatch = useDispatch();
+	const { showSidebar } = useSelector(state => state.menu);
+	const [search, setSearch] = useState("");
 
 	const toggleSidebar = () => {
-		setShowSidebar(!showSidebar);
+		if (showSidebar) {
+			dispatch(hideMenu());
+		} else {
+			dispatch(showMenu());
+		}
 	}
+
+	useEffect(() => {
+		if (showSidebar) {
+			document.addEventListener("click", toggleSidebar);
+			return () => {
+				document.removeEventListener("click", toggleSidebar);
+			}
+		}
+
+	}, [showSidebar])
+
+	useEffect(() => {
+		dispatch(getPosts());
+		if (search) {
+			dispatch(filterPosts(search));
+		}
+	}, [search])
 
 	return (
 		<>
@@ -26,26 +50,35 @@ const Navbar = () => {
 						className={classes.menuButton}
 						color="inherit"
 						aria-label="open drawer"
+						onClick={toggleSidebar}
+
 					>
-						<MenuIcon onClick={toggleSidebar}/>
+						<MenuIcon />
 					</IconButton>
-					<img src={logo} alt="icon" height="50" />
+					<Link to="/">
+						<img src={logo} alt="icon" height="50" />
+					</Link>
 					<Typography className={classes.title} variant="h6">
 						&nbsp; (((CringeCinema)))
 					</Typography>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
-						</div>
-						<InputBase
-							placeholder="Search…"
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ 'aria-label': 'search' }}
-						/>
-					</div>
+					{
+						useLocation().pathname === "/" ?
+							<div className={classes.search}>
+								<div className={classes.searchIcon}>
+									<SearchIcon />
+								</div>
+								<InputBase
+									placeholder="Search…"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput,
+									}}
+									inputProps={{ 'aria-label': 'search' }}
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+								/>
+							</div> : null
+					}
 				</Toolbar>
 			</AppBar>
 			<nav className={showSidebar ? `${classes.navMenu} ${classes.active}` : `${classes.navMenu}`}>

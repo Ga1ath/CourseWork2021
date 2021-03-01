@@ -61,12 +61,11 @@ export default makeStyles((theme) => ({
 		height: "100vh",
 		display: "flex",
 		justifyContent: "center",
-		paddingTop: "60px",
 		position: "fixed",
-		top: "0",
+		top: "60px",
 		left: "-100%",
 		transition: "850ms",
-		zIndex: "2"
+		zIndex: "2002"
 	},
 	navText: {
 		display: "flex",
@@ -96,7 +95,7 @@ export default makeStyles((theme) => ({
 	},
 	navMenuItems: {
 		width: "100%",
-		paddingLeft: "10px"
+		paddingLeft: "0"
 	},
 	navbarToggle: {
 		backgroundColor: "black",
