@@ -7,10 +7,10 @@ import useStyles from './styles';
 
 import data from '../../data';
 
-const Posts = () => {
+const Posts = ({ posts }) => {
 	const classes = useStyles();
-	const posts = data;
-	// const posts = useSelector(state => state.posts);
+	//console.log(posts);
+	//const posts = useSelector(state => state.posts);
 
 	return (
 		<Grid container justify={"flex-start"} className={classes.containerGrid}>
