@@ -9,5 +9,5 @@ export const reducers = combineReducers({
   menu: toggleReducer,
   posts: postReducer,
   authReducer,
-  sessionReducer
+  filmInfo: sessionReducer
 });
