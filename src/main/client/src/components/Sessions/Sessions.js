@@ -32,8 +32,21 @@ const Sessions = ({ filmId }) => {
   return (
     <div className={classes.sessionsContainer}>
       <div className={classes.filmInfo}>
-        <Grid item xs={3}>
-          <img src={sessionsData.logo} className={classes.logo} />
+        <div className={classes.title}>
+          <p>{sessionsData.filmName}</p>
+        </div>
+        <Grid container>
+          <Grid item xs={12} sm={4}>
+            <img src={sessionsData.logo} className={classes.logo} />
+          </Grid>
+          <Grid item xs={12} sm={8} className={classes.info}>
+            <p>Length: <span>{sessionsData.length}</span></p>
+            <p>Director: <span>{sessionsData.director}</span></p>
+            <p>Main Actors: <span>{sessionsData.mainRoles}</span></p>
+            <div className={classes.plot}>
+              <p><span>{sessionsData.plot}</span></p>
+            </div>
+          </Grid>
         </Grid>
       </div>
       <div className={classes.buttonContainer}>

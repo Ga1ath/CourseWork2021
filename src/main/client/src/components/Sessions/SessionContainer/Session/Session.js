@@ -16,8 +16,8 @@ const Session = ({ session }) => {
   return (
     <Button className={classes.sessionButton} variant="text" onClick={() => handleOnClick(id)}>
       <div className={classes.buttonContent}>
-        <h2 style={{ "font-size": "90%", margin: "0 2px" }}>{time}</h2>
-        <p style={{ "font-size": "80%", margin: "0" }}>from {price}₽</p>
+        <h2 style={{ fontSize: "90%", margin: "0 2px"}}>{time}</h2>
+        <p style={{ fontSize: "80%", margin: "0" }}>from {price}₽</p>
       </div>
     </Button>
   )

@@ -13,5 +13,6 @@ export default makeStyles({
   buttonContent: {
     display: "flex",
     flexDirection: "column",
-  }
+    fontFamily: "Arial, Helvetica"
+  },
 })
