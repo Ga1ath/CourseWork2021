@@ -11,5 +11,9 @@ export default makeStyles({
     borderWidth: "1px",
     display: "flex",
     flexDirection: "row"
+  },
+  curDate: {
+    fontWeight: "150",
+    fontFamily: 'arial, helvetica',
   }
 })

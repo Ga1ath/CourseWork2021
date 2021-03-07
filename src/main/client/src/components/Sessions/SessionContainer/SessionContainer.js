@@ -11,7 +11,7 @@ const SessionContainer = ({ date, sessionsOnDate }) => {
   return (
     <Grid container className={classes.sessionContainer}>
       <Grid item xs={3} className={classes.date}>
-        <h1 style={{ fontWeight: "150" }}>{date}</h1>
+        <h1 className={classes.curDate}>{date}</h1>
       </Grid>
       <Grid item xs={2}>
       </Grid>
