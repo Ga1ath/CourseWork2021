@@ -15,7 +15,7 @@ const SessionContainer = ({ date, sessionsOnDate }) => {
       </Grid>
       <Grid item xs={2}>
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={7} className={classes.sessions}>
         {sessionsOnDate.map((session, index) => {
           return <Session key={index} session={session} />
         })}
