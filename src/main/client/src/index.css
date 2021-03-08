@@ -12,3 +12,7 @@ body {
     position: relative;
     background-color: black;
 }
+
+.blurbg {
+    filter: blur(10px)
+}

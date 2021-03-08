@@ -9,6 +9,9 @@ import Auth from "./components/Auth/Auth";
 import './index.css';
 import Sessions from './components/Sessions/Sessions';
 import Layout from "./components/Layout/Layout";
+import Hall from "./components/Modals/Hall/Hall";
+import BlurBg from "./components/BlurBG/BlurBG";
+import { useSelector } from "react-redux";
 
 const SessionsPage = () => {
 
@@ -17,26 +20,37 @@ const SessionsPage = () => {
 }
 
 function App() {
-  return (
-    <Router>
-      <div className="content">
-        <Layout />
-        <Navbar />
+  let visible = useSelector(state => state.hallPopup.visible);
 
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/auth">
-            <Auth />
-          </Route>
-          <Route exact path="/sessions/:id">
-            <SessionsPage />
-          </Route>
-        </Switch>
-      </div>
-      <Footer />
-    </Router>
+  return (
+    <>
+      {visible &&
+        <>
+          <BlurBg>
+
+          </BlurBg>
+          <Hall />
+        </>
+      }
+      <Router>
+        <div className="content">
+          <Navbar />
+          <Layout />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/auth">
+              <Auth />
+            </Route>
+            <Route exact path="/sessions/:id">
+              <SessionsPage />
+            </Route>
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
+      </>
   );
 }
 

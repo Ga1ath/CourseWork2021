@@ -3,14 +3,18 @@ import { useHistory } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 import useStyles from './styles';
+import { useDispatch, useSelector } from "react-redux";
+import { showHallPopup } from "../../../../actions/hallPopup";
 
 const Session = ({ session }) => {
   const { id, time, price, hall } = session;
   const history = useHistory();
   const classes = useStyles();
+  const visiblePopup = useSelector(state => state.hallPopup.visible);
+  const dispatch = useDispatch();
 
   const handleOnClick = (id) => {
-    history.push(`/session/${id}`);
+    dispatch(showHallPopup());
   }
 
   return (

@@ -4,7 +4,7 @@ export default makeStyles({
 	root: {
 		maxWidth: 270,
 		backgroundColor: 'ButtonFace',
-		marginTop: "30px"
+		marginTop: "15px"
 	},
 	media: {
 		height: 190,
