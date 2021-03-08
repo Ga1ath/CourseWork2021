@@ -5,6 +5,10 @@ export default makeStyles({
     color: "white",
     fontWeight: "200"
   },
+  // sessions: {
+  //   display: "flex",
+  //   alignContent: 'end'
+  // },
   sessionContainer: {
     borderTop: "solid",
     borderColor: "grey",
@@ -14,6 +18,7 @@ export default makeStyles({
   },
   curDate: {
     fontWeight: "150",
-    fontFamily: 'arial, helvetica',
+    fontFamily: "arial, helvetica",
+    fontSize: "1.75em"
   }
 })

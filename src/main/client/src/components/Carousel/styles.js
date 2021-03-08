@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
 	},
 	image: {
 		//width: "100%",
-		maxWidth: "400px",
+		maxWidth: "369px",
 		//height: "87vh"
 	},
 	imageContainer: {

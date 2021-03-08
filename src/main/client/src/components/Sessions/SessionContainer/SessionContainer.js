@@ -9,13 +9,13 @@ const SessionContainer = ({ date, sessionsOnDate }) => {
   // const { id, date, time, price, hall } = session;
 
   return (
-    <Grid container className={classes.sessionContainer}>
+    <Grid container className={classes.sessionContainer} justify="space-between">
       <Grid item xs={3} className={classes.date}>
         <h1 className={classes.curDate}>{date}</h1>
       </Grid>
-      <Grid item xs={2}>
-      </Grid>
-      <Grid item xs={7}>
+      {/*<Grid item xs={2}>*/}
+      {/*</Grid>*/}
+      <Grid item xs={7} className={classes.sessions}>
         {sessionsOnDate.map((session, index) => {
           return <Session key={index} session={session} />
         })}
