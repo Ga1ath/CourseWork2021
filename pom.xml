@@ -12,7 +12,7 @@
     <artifactId>cinema_booking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cinema_booking</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Cinema Booking Spring Project</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -40,6 +40,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>2.4.5</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.postgis</groupId>

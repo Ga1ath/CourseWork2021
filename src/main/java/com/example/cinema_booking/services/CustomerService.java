@@ -1,37 +1,35 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.CustomerDAOimplementation;
 import com.example.cinema_booking.models.Customer;
-import org.springframework.stereotype.Component;
+import com.example.cinema_booking.repositories.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.Collection;
 
-
-@Component
+@Service
 public class CustomerService {
-    private final CustomerDAOimplementation customerDAOimplementation = new CustomerDAOimplementation();
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public CustomerService() {
 
     }
 
-    public Exception addCustomer(Customer customer) {
-        return customerDAOimplementation.add(customer);
+    public void addCustomer(Customer customer) {
+        customerRepository.save(customer);
     }
 
-    public Exception updateCustomer(Customer customer) {
-        return customerDAOimplementation.update(customer);
+    public void deleteCustomer(Customer customer) {
+        customerRepository.delete(customer);
     }
 
-    public Exception deleteCustomer(Customer customer) {
-        return customerDAOimplementation.delete(customer);
+    public Iterable<Customer> getAllCustomer() {
+        return customerRepository.findAll();
     }
 
-    public Collection<Customer> getAllCustomer() {
-        return customerDAOimplementation.getAll();
-    }
-
-    public Customer findByIdCustomer(String id) {
-        return customerDAOimplementation.findByID(id);
+    public Optional<Customer> findByIdCustomer(String name) {
+        return customerRepository.findById(name);
     }
 }

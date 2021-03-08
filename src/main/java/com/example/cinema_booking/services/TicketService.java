@@ -1,34 +1,35 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.TicketDAOimplementation;
 import com.example.cinema_booking.models.Ticket;
+import com.example.cinema_booking.repositories.TicketRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.Collection;
 
+@Service
 public class TicketService {
-    private final TicketDAOimplementation ticketDAOimplementation = new TicketDAOimplementation();
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     public TicketService() {
 
     }
 
     public void addTicket(Ticket ticket) {
-        ticketDAOimplementation.add(ticket);
-    }
-
-    public void updateTicket(Ticket ticket) {
-        ticketDAOimplementation.update(ticket);
+        ticketRepository.save(ticket);
     }
 
     public void deleteTicket(Ticket ticket) {
-        ticketDAOimplementation.delete(ticket);
+        ticketRepository.delete(ticket);
     }
 
-    public Collection<Ticket> getAllTicket() {
-        return ticketDAOimplementation.getAll();
+    public Iterable<Ticket> getAllTicket() {
+        return ticketRepository.findAll();
     }
 
-    public Ticket findByIdTicket(int id) {
-        return ticketDAOimplementation.findByID(id);
+    public Optional<Ticket> findByIdTicket(int id) {
+        return ticketRepository.findById(id);
     }
 }

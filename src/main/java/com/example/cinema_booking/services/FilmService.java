@@ -1,41 +1,39 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.FilmDAOimplementation;
 import com.example.cinema_booking.models.Film;
-import org.springframework.stereotype.Component;
+import com.example.cinema_booking.repositories.FilmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.Collection;
 
-
-@Component
+@Service
 public class FilmService {
-    private final FilmDAOimplementation filmDAOimplementation = new FilmDAOimplementation();
+
+    @Autowired
+    private FilmRepository filmRepository;
 
     public FilmService() {
 
     }
 
     public void addFilm(Film film) {
-        filmDAOimplementation.add(film);
-    }
-
-    public void updateFilm(Film film) {
-        filmDAOimplementation.update(film);
+        filmRepository.save(film);
     }
 
     public void deleteFilm(Film film) {
-        filmDAOimplementation.delete(film);
+        filmRepository.delete(film);
     }
 
-    public Collection<Film> getAllFilm() {
-        return filmDAOimplementation.getAll();
+    public Iterable<Film> getAllFilm() {
+        return filmRepository.findAll();
     }
 
-    public Film findByIdFilm(int id) {
-        return filmDAOimplementation.findByID(id);
+    public Optional<Film> findByIdFilm(int id) {
+        return filmRepository.findById(id);
     }
 
-    public Film findByNameFilm(String name) {
-        return filmDAOimplementation.findByName(name);
+    public Optional<Film> findByFilmNameFilm(String filmName) {
+        return filmRepository.findByFilmName(filmName);
     }
 }

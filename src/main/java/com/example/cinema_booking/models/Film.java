@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Film {
 
     @Column(name = "\"FilmName\"")
-    private String FilmName;
+    private String filmName;
 
     @Column(name = "\"ReleaseDate\"")
     private String ReleaseDate;
@@ -48,7 +48,7 @@ public class Film {
     public Film(String filmName, String releaseDate, String lengthOfFilm,
                 String mainRoles, String logo, String genre, Integer filmIMDB,
                 String releaseYear, String rated, String director, String plot) {
-        FilmName = filmName;
+        this.filmName = filmName;
         ReleaseDate = releaseDate;
         LengthOfFilm = lengthOfFilm;
         MainRoles = mainRoles;
@@ -62,11 +62,11 @@ public class Film {
     }
 
     public String getFilmName() {
-        return FilmName;
+        return filmName;
     }
 
     public void setFilmName(String filmName) {
-        FilmName = filmName;
+        this.filmName = filmName;
     }
 
     public String getReleaseDate() {

@@ -1,34 +1,35 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.CinemaDAOimplementation;
 import com.example.cinema_booking.models.Cinema;
+import com.example.cinema_booking.repositories.CinemaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.Collection;
 
+@Service
 public class CinemaService {
-    private final CinemaDAOimplementation cinemaDAOimplementation = new CinemaDAOimplementation();
+
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
     public CinemaService() {
 
     }
 
     public void addCinema(Cinema cinema) {
-        cinemaDAOimplementation.add(cinema);
-    }
-
-    public void updateCinema(Cinema cinema) {
-        cinemaDAOimplementation.update(cinema);
+        cinemaRepository.save(cinema);
     }
 
     public void deleteCinema(Cinema cinema) {
-        cinemaDAOimplementation.delete(cinema);
+        cinemaRepository.delete(cinema);
     }
 
-    public Collection<Cinema> getAllCinema() {
-        return cinemaDAOimplementation.getAll();
+    public Iterable<Cinema> getAllCinema() {
+        return cinemaRepository.findAll();
     }
 
-    public Cinema findByIdCinema(int id) {
-        return cinemaDAOimplementation.findByID(id);
+    public Optional<Cinema> findByIdCinema(int id) {
+        return cinemaRepository.findById(id);
     }
 }

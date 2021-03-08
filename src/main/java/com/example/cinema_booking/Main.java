@@ -1,5 +1,7 @@
 package com.example.cinema_booking;
 
+import com.example.cinema_booking.models.Film;
+import com.example.cinema_booking.models.Hall;
 import com.example.cinema_booking.models.SessionFilm;
 import com.example.cinema_booking.services.FilmService;
 import com.example.cinema_booking.services.HallService;
@@ -8,12 +10,13 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Optional;
 
 
 public class Main {
     public static void main(String[] args) throws UnirestException {
-//        HttpResponse<String> response = Unirest.get("https://imdb8.p.rapidapi.com/title/auto-complete?q=avengersinfinitywar")
+//        HttpResponse<String> response = Unirest.get("https://imdb8.p.rapidapi.com/title/auto-complete?q=avengersendgame")
 //                .header("x-rapidapi-key", "f3e55c08ddmsh1a3452690bf39ecp1c7681jsnd926d8c78dde")
 //                .header("x-rapidapi-host", "imdb8.p.rapidapi.com")
 //                .asString();
@@ -56,13 +59,13 @@ public class Main {
 
         HallService hallService = new HallService();
         FilmService filmService = new FilmService();
-
         SessionFilmService sessionFilmService = new SessionFilmService();
+        Optional<Film> film = filmService.findByIdFilm(4154756);
+        Optional<Hall> hall = hallService.findByIdHall(1);
         sessionFilmService.addSessionFilm(new SessionFilm(
-            "04:20",
-                "January 14th",
-                hallService.findByIdHall(1),
-                filmService.findByIdFilm(4154756)
-        ));
+                        "04:20",
+                        "January 14th",
+                hall.orElse(new Hall()),
+                film.orElse(new Film())));
     }
 }

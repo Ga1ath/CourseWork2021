@@ -1,34 +1,46 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.SessionFilmDAOimplementation;
+import com.example.cinema_booking.models.Film;
 import com.example.cinema_booking.models.SessionFilm;
+import com.example.cinema_booking.repositories.SessionFilmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+
+@Service
 public class SessionFilmService {
-    private final SessionFilmDAOimplementation sessionFilmDAOimplementation = new SessionFilmDAOimplementation();
+
+    @Autowired
+    private SessionFilmRepository sessionFilmRepository;
+
+    @Autowired
+    private FilmService filmService;
 
     public SessionFilmService() {
 
     }
 
     public void addSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmDAOimplementation.add(sessionFilm);
-    }
-
-    public void updateSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmDAOimplementation.update(sessionFilm);
+        sessionFilmRepository.save(sessionFilm);
     }
 
     public void deleteSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmDAOimplementation.delete(sessionFilm);
+        sessionFilmRepository.delete(sessionFilm);
     }
 
-    public Collection<SessionFilm> getAllSessionFilm() {
-        return sessionFilmDAOimplementation.getAll();
+    public Iterable<SessionFilm> getAllSessionFilm() {
+        return sessionFilmRepository.findAll();
     }
 
-    public SessionFilm findByIdSessionFilm(int id) {
-        return sessionFilmDAOimplementation.findByID(id);
+    public Optional<SessionFilm> findByIdSessionFilm(int id) {
+        return sessionFilmRepository.findById(id);
+    }
+
+    public List<SessionFilm> findAllWhereIDEqualFilmID(int filmID) {
+        return sessionFilmRepository.findByFilmID(filmID);
     }
 }

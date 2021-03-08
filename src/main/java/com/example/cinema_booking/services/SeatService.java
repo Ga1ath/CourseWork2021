@@ -1,34 +1,35 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.SeatDAOimplementation;
 import com.example.cinema_booking.models.Seat;
+import com.example.cinema_booking.repositories.SeatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.Collection;
 
+@Service
 public class SeatService {
-    private final SeatDAOimplementation seatDAOimplementation = new SeatDAOimplementation();
+
+    @Autowired
+    private SeatRepository seatRepository;
 
     public SeatService() {
 
     }
 
     public void addSeat(Seat seat) {
-        seatDAOimplementation.add(seat);
-    }
-
-    public void updateSeat(Seat seat) {
-        seatDAOimplementation.update(seat);
+        seatRepository.save(seat);
     }
 
     public void deleteSeat(Seat seat) {
-        seatDAOimplementation.delete(seat);
+        seatRepository.delete(seat);
     }
 
-    public Collection<Seat> getAllSeat() {
-        return seatDAOimplementation.getAll();
+    public Iterable<Seat> getAllSeat() {
+        return seatRepository.findAll();
     }
 
-    public Seat findByIdSeat(int id) {
-        return seatDAOimplementation.findByID(id);
+    public Optional<Seat> findByIdSeat(int id) {
+        return seatRepository.findById(id);
     }
 }

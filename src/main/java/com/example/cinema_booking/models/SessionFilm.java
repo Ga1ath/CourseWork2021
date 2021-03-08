@@ -24,7 +24,9 @@ public class SessionFilm {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`FilmIMDB`")
-    private Film FilmIMDB;
+    private Film filmIMDB;
+
+    private int filmID;
 
     public SessionFilm() {
 
@@ -39,7 +41,8 @@ public class SessionFilm {
         SessionTime = sessionTime;
         SessionDate = sessionDate;
         HallID = hallID;
-        FilmIMDB = filmIMDB;
+        this.filmIMDB = filmIMDB;
+        filmID = filmIMDB.getFilmIMDB();
     }
 
     public Integer getSessionID() {
@@ -71,10 +74,18 @@ public class SessionFilm {
     }
 
     public Film getFilmIMDB() {
-        return FilmIMDB;
+        return filmIMDB;
     }
 
     public void setFilmIMDB(Film filmIMDB) {
-        FilmIMDB = filmIMDB;
+        this.filmIMDB = filmIMDB;
+    }
+
+    public int getFilmID() {
+        return filmID;
+    }
+
+    public void setFilmID(int filmID) {
+        this.filmID = filmID;
     }
 }

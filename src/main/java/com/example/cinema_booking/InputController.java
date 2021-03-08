@@ -6,12 +6,10 @@ import com.example.cinema_booking.models.Film;
 import com.example.cinema_booking.models.SessionFilm;
 import com.example.cinema_booking.services.CustomerService;
 import com.example.cinema_booking.services.FilmService;
-import com.example.cinema_booking.util.HibernateSessionFactory;
+import com.example.cinema_booking.services.SessionFilmService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -38,20 +33,24 @@ public class InputController {
     @Autowired
     private FilmService filmService;
 
-    @GetMapping
-    public ResponseEntity<HashMap<String, Object>> getInfoAboutFilm(
-            @RequestParam(name = "filmName", defaultValue = "Avengers Infinity War") String filmName
+    @Autowired
+    private SessionFilmService sessionFilmService;
+
+    @GetMapping(value = "/find")
+    public ResponseEntity<HashMap<String, Object>> getOneFilm(
+            @RequestParam(name = "filmName", defaultValue = "Avengers Infinity War")
+                    String filmName
     ) throws UnirestException, JSONException {
 
         // checking existence film in DB
-        Film film = filmService.findByNameFilm(filmName);
-        if (film != null) {
+        Optional<Film> film = filmService.findByFilmNameFilm(filmName);
+        if (film.isPresent()) {
             // creating HaspMap response to client
             HashMap<String, Object> response_to_client = new HashMap<>();
-            response_to_client.put("ID", film.getFilmIMDB());
+            response_to_client.put("ID", film.get().getFilmIMDB());
             response_to_client.put("Title", filmName);
-            response_to_client.put("Genre", film.getGenre());
-            response_to_client.put("Logo", film.getLogo());
+            response_to_client.put("Genre", film.get().getGenre());
+            response_to_client.put("Logo", film.get().getLogo());
             return new ResponseEntity<>(response_to_client, HttpStatus.OK);
         }
 
@@ -110,28 +109,39 @@ public class InputController {
         return new ResponseEntity<>(response_to_client, HttpStatus.OK);
     }
 
+
+    @GetMapping
+    public ResponseEntity<ArrayList<HashMap<String, Object>>> getInfoAboutFilm() {
+        ArrayList<Film> films = (ArrayList<Film>) filmService.getAllFilm();
+        ArrayList<HashMap<String, Object>> result = new ArrayList<>();
+        for (Film film : films) {
+            HashMap<String, Object> current  = new HashMap<>();
+            current.put("id", film.getFilmIMDB());
+            current.put("name", film.getFilmName());
+            current.put("genre", film.getGenre());
+            current.put("logo", film.getLogo());
+            result.add(current);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<HashMap<String, String>> signup(
             @RequestBody Map<String, String> userInfo
     ) {
         String loginName = userInfo.get("LoginName");
-        if (customerService.findByIdCustomer(loginName) != null) {
+        if (customerService.findByIdCustomer(loginName).isPresent()) {
             HashMap<String, String> cause = new HashMap<>();
             cause.put("Cause", "Customer with this LoginName already exists");
             return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
         }
 
-        Exception error = customerService.addCustomer(new Customer(
+        customerService.addCustomer(new Customer(
                 userInfo.get("Email"),
                 userInfo.get("FirstName"),
                 userInfo.get("LastName"),
                 loginName,
                 passwordEncoder.encode(userInfo.get("Password"))));
-        if (error != null) {
-            HashMap<String, String> cause = new HashMap<>();
-            cause.put("Cause", error.getMessage());
-            return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
-        }
 
         return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
@@ -141,14 +151,15 @@ public class InputController {
             @RequestBody Map<String, String> userInfo
     ) {
         String loginName = userInfo.get("LoginName");
-        Customer customer = customerService.findByIdCustomer(loginName);
-        if (customer == null) {
+        Optional<Customer> customer = customerService.findByIdCustomer(loginName);
+        if (customer.isEmpty()) {
             HashMap<String, String> cause = new HashMap<>();
             cause.put("Cause", "Customer with this LoginName does not exist");
             return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
         }
 
-        if (!passwordEncoder.matches(userInfo.get("Password"), customer.getPasswordHash())) {
+        if (!passwordEncoder.matches(userInfo.get("Password"),
+                customer.get().getPasswordHash())) {
             HashMap<String, String> cause = new HashMap<>();
             cause.put("Cause", "Wrong password");
             return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
@@ -161,8 +172,8 @@ public class InputController {
     public ResponseEntity<ArrayList<HashMap<String, Object>>> getSessionsByFilm(
             @RequestParam(name = "filmID") Integer filmID
     ) {
-        Film film = filmService.findByIdFilm(filmID);
-        if (film == null) {
+        Optional<Film> film = filmService.findByIdFilm(filmID);
+        if (film.isEmpty()) {
             ArrayList<HashMap<String, Object>> cause = new ArrayList<>();
             HashMap<String, Object> message = new HashMap<>();
             message.put("Cause", "Film with this ID does not exist");
@@ -170,21 +181,8 @@ public class InputController {
             return new ResponseEntity<>(cause, HttpStatus.NOT_FOUND);
         }
 
-        Session session = null;
-        List<SessionFilm> sessionFilms = null;
-        try {
-            session = HibernateSessionFactory.getSessionFactory().openSession();
-            Query<SessionFilm> query = session.createQuery(
-                    "select s from SessionFilm s where s.FilmIMDB =: filmID");
-            query.setParameter("filmID", filmID);
-            sessionFilms = query.getResultList();
-        } catch (Exception e) {
-            System.out.println("Cannot find session objects by filmID: " + e.getMessage());
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        List<SessionFilm> sessionFilms =
+                sessionFilmService.findAllWhereIDEqualFilmID(filmID);
 
         ArrayList<HashMap<String, Object>> result = new ArrayList<>();
         if (sessionFilms != null) {

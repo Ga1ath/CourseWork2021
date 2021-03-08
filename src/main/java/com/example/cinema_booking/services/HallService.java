@@ -1,34 +1,35 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.HallDAOimplementation;
 import com.example.cinema_booking.models.Hall;
+import com.example.cinema_booking.repositories.HallRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.Collection;
 
+@Service
 public class HallService {
-    private final HallDAOimplementation hallDAOimplementation = new HallDAOimplementation();
+
+    @Autowired
+    private HallRepository hallRepository;
 
     public HallService() {
 
     }
 
     public void addHall(Hall hall) {
-        hallDAOimplementation.add(hall);
-    }
-
-    public void updateHall(Hall hall) {
-        hallDAOimplementation.update(hall);
+        hallRepository.save(hall);
     }
 
     public void deleteHall(Hall hall) {
-        hallDAOimplementation.delete(hall);
+        hallRepository.delete(hall);
     }
 
-    public Collection<Hall> getAllHall() {
-        return hallDAOimplementation.getAll();
+    public Iterable<Hall> getAllHall() {
+        return hallRepository.findAll();
     }
 
-    public Hall findByIdHall(int id) {
-        return hallDAOimplementation.findByID(id);
+    public Optional<Hall> findByIdHall(int id) {
+        return hallRepository.findById(id);
     }
 }
