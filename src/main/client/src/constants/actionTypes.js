@@ -10,3 +10,5 @@ export const HIDE_MENU = "HIDE_MENU";
 
 export const SHOW_POPUP = "SHOW_POPUP";
 export const HIDE_POPUP = "HIDE_POPUP";
+
+export const FETCH_CURRENT_SESSION = "FETCH_CURRENT_SESSION";
