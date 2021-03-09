@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export default makeStyles({
 	root: {
 		maxWidth: 270,
+		height: "330px",
 		backgroundColor: 'ButtonFace',
 		marginTop: "15px"
 	},

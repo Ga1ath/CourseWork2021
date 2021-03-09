@@ -27,6 +27,7 @@ export default makeStyles({
     backgroundColor: "rgba(95,91,91,0.9)",
     marginTop: "52px",
     padding: "5vh 10vh",
+    minHeight: "calc(100vh - 250px)"
   },
   plot: {
     marginTop: "25px"
