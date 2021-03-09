@@ -156,33 +156,40 @@ public class InputController {
     }
 
     @RequestMapping(value = "/sessions", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<HashMap<String, Object>>> getSessionsByFilm(
+    public ResponseEntity<HashMap<String, Object>> getSessionsByFilm(
             @RequestParam(name = "filmID") Integer filmID
     ) {
         JSONObject film = FilmService.findByIDFilm(filmID);
         if (film.length() == 0) {
-            ArrayList<HashMap<String, Object>> cause = new ArrayList<>();
-            HashMap<String, Object> message = new HashMap<>();
-            message.put("Cause", "Film with this ID does not exist");
-            cause.add(message);
+            HashMap<String, Object> cause = new HashMap<>();
+            cause.put("Cause", "Film with this ID does not exist");
             return new ResponseEntity<>(cause, HttpStatus.NOT_FOUND);
         }
 
         ArrayList<JSONObject> sessionFilms =
                 SessionFilmService.findAllWhereIDEqualFilmID(filmID);
+        HashMap<String, Object> result = new HashMap<>();
 
-        ArrayList<HashMap<String, Object>> result = new ArrayList<>();
+        result.put("filmName", film.getString("filmName"));
+        result.put("length", film.getString("lengthOfFilm"));
+        result.put("mainRoles", film.getString("mainRoles"));
+        result.put("logo", film.getString("logo"));
+        result.put("rated", film.getString("rated"));
+        result.put("director", film.getString("director"));
+        result.put("plot", film.getString("plot"));
+
+        ArrayList<HashMap<String, Object>> sessions = new ArrayList<>();
         if (sessionFilms.size() > 0) {
             for (JSONObject sessionFilm : sessionFilms) {
                 HashMap<String, Object> currentSessionFilm = new HashMap<>();
-                currentSessionFilm.put("SessionID", sessionFilm.getInt("id"));
-                currentSessionFilm.put("HallID", sessionFilm.getInt("hallID"));
-                currentSessionFilm.put("FilmID", sessionFilm.getInt("filmIMDB"));
-                currentSessionFilm.put("SessionDate", sessionFilm.getString("sessionDate"));
-                currentSessionFilm.put("SessionTime", sessionFilm.getString("sessionTime"));
-                result.add(currentSessionFilm);
+                currentSessionFilm.put("id", sessionFilm.getInt("id"));
+                currentSessionFilm.put("date", sessionFilm.getString("sessionDate"));
+                currentSessionFilm.put("time", sessionFilm.getString("sessionTime"));
+                sessions.add(currentSessionFilm);
             }
         }
+
+        result.put("sessions", sessions);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
