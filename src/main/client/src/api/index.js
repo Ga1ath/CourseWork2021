@@ -7,6 +7,6 @@ export const fetchPosts = () => API.get('/');
 export const signIn = (formData) => API.post('/auth/signin', formData);
 export const signUp = (formData) => API.post('/auth/signup', formData);
 
-export const fetchSessions = (filmId) => API.get(`/sessions/${filmId}`);
+export const fetchSessions = (filmId) => API.get(`/sessions/?filmID=${filmId}`);
 
-export const fetchCurrentSession = (sessionId) => API.get(`/session/${sessionId}`);
+export const fetchCurrentSession = (sessionId) => API.get(`/session/?sessionID=${sessionId}`);

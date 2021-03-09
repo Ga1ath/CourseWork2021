@@ -6,10 +6,10 @@ export default makeStyles({
     position: "absolute",
     //padding: "0",
     width: "100%",
-    marginTop: "calc(100%+60px)",
+    //marginTop: "calc(100%+60px)",
     //bottom: "0",
     top: "inherit",
-    zIndex: 10,
+    zIndex: 1000,
   },
   toolbar: {
     display: "flex",
