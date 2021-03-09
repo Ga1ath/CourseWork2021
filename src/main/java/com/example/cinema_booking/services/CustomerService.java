@@ -1,35 +1,29 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.models.Customer;
-import com.example.cinema_booking.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.cinema_booking.dao.CustomerDAO;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.ArrayList;
 
 
 @Service
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    public CustomerService() {
-
+    public static void addCustomer(String email, String firstName, String lastName,
+                                   String loginName, String passwordHash) {
+        CustomerDAO.add(email, firstName, lastName, loginName, passwordHash);
     }
 
-    public void addCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public static void deleteCustomer(String loginName) {
+        CustomerDAO.delete(loginName);
     }
 
-    public void deleteCustomer(Customer customer) {
-        customerRepository.delete(customer);
+    public static ArrayList<JSONObject> getAllCustomers() {
+        return CustomerDAO.getAll();
     }
 
-    public Iterable<Customer> getAllCustomer() {
-        return customerRepository.findAll();
-    }
-
-    public Optional<Customer> findByIdCustomer(String name) {
-        return customerRepository.findById(name);
+    public static JSONObject findByIDCustomer(String loginName) {
+        return CustomerDAO.findByID(loginName);
     }
 }

@@ -1,35 +1,28 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.models.Cinema;
-import com.example.cinema_booking.repositories.CinemaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.cinema_booking.dao.CinemaDAO;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.ArrayList;
 
 
 @Service
 public class CinemaService {
 
-    @Autowired
-    private CinemaRepository cinemaRepository;
-
-    public CinemaService() {
-
+    public static void addCinema(String address, String publicName) {
+        CinemaDAO.add(address, publicName);
     }
 
-    public void addCinema(Cinema cinema) {
-        cinemaRepository.save(cinema);
+    public static void deleteCinema(int id) {
+        CinemaDAO.delete(id);
     }
 
-    public void deleteCinema(Cinema cinema) {
-        cinemaRepository.delete(cinema);
+    public static ArrayList<JSONObject> getAllCinemas() {
+        return CinemaDAO.getAll();
     }
 
-    public Iterable<Cinema> getAllCinema() {
-        return cinemaRepository.findAll();
-    }
-
-    public Optional<Cinema> findByIdCinema(int id) {
-        return cinemaRepository.findById(id);
+    public static JSONObject findByIDCinema(int id) {
+        return CinemaDAO.findByID(id);
     }
 }

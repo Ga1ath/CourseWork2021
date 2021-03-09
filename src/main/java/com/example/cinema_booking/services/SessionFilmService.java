@@ -1,46 +1,33 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.models.Film;
-import com.example.cinema_booking.models.SessionFilm;
-import com.example.cinema_booking.repositories.SessionFilmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import com.example.cinema_booking.dao.SessionFilmDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
 public class SessionFilmService {
 
-    @Autowired
-    private SessionFilmRepository sessionFilmRepository;
-
-    @Autowired
-    private FilmService filmService;
-
-    public SessionFilmService() {
-
+    public static void addSessionFilm(String sessionDate, int hallID,
+                                      int filmID, String sessionTime) {
+        SessionFilmDAO.add(sessionDate, hallID, filmID, sessionTime);
     }
 
-    public void addSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmRepository.save(sessionFilm);
+    public static void deleteSessionFilm(int id) {
+        SessionFilmDAO.delete(id);
     }
 
-    public void deleteSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmRepository.delete(sessionFilm);
+    public static ArrayList<JSONObject> getAllSessionFilms() {
+        return SessionFilmDAO.getAll();
     }
 
-    public Iterable<SessionFilm> getAllSessionFilm() {
-        return sessionFilmRepository.findAll();
+    public static JSONObject findByIDSessionFilm(int id) {
+        return SessionFilmDAO.findByID(id);
     }
 
-    public Optional<SessionFilm> findByIdSessionFilm(int id) {
-        return sessionFilmRepository.findById(id);
-    }
-
-    public List<SessionFilm> findAllWhereIDEqualFilmID(int filmID) {
-        return sessionFilmRepository.findByFilmID(filmID);
+    public static ArrayList<JSONObject> findAllWhereIDEqualFilmID(int filmID) {
+        return SessionFilmDAO.findAllWhereIDEqualFilmID(filmID);
     }
 }

@@ -1,39 +1,36 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.models.Film;
-import com.example.cinema_booking.repositories.FilmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.cinema_booking.dao.CustomerDAO;
+import com.example.cinema_booking.dao.FilmDAO;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.ArrayList;
 
 
 @Service
 public class FilmService {
 
-    @Autowired
-    private FilmRepository filmRepository;
-
-    public FilmService() {
-
+    public static void addFilm(String filmName, String releaseDate, String lengthOfFilm,
+                        String mainRoles, String logo, String genre, int filmIMDB,
+                        String releaseYear, String rated, String director, String plot) {
+        FilmDAO.add(filmName, releaseDate, lengthOfFilm,
+                mainRoles, logo, genre, filmIMDB, releaseYear, rated, director, plot);
     }
 
-    public void addFilm(Film film) {
-        filmRepository.save(film);
+    public static void deleteFilm(int id) {
+        FilmDAO.delete(id);
     }
 
-    public void deleteFilm(Film film) {
-        filmRepository.delete(film);
+    public static ArrayList<JSONObject> getAllFilms() {
+        return FilmDAO.getAll();
     }
 
-    public Iterable<Film> getAllFilm() {
-        return filmRepository.findAll();
+    public static JSONObject findByIDFilm(int id) {
+        return FilmDAO.findByID(id);
     }
 
-    public Optional<Film> findByIdFilm(int id) {
-        return filmRepository.findById(id);
-    }
-
-    public Optional<Film> findByFilmNameFilm(String filmName) {
-        return filmRepository.findByFilmName(filmName);
+    public static JSONObject findByFilmNameFilm(String filmName) {
+        return FilmDAO.findByFilmName(filmName);
     }
 }

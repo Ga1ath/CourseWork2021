@@ -1,35 +1,28 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.models.Seat;
-import com.example.cinema_booking.repositories.SeatRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.cinema_booking.dao.SeatDAO;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.ArrayList;
 
 
 @Service
 public class SeatService {
 
-    @Autowired
-    private SeatRepository seatRepository;
-
-    public SeatService() {
-
+    public static void addSeat(int rowID, String seatName) {
+        SeatDAO.add(rowID, seatName);
     }
 
-    public void addSeat(Seat seat) {
-        seatRepository.save(seat);
+    public static void deleteSeat(int id) {
+        SeatDAO.delete(id);
     }
 
-    public void deleteSeat(Seat seat) {
-        seatRepository.delete(seat);
+    public static ArrayList<JSONObject> getAllSeats() {
+        return SeatDAO.getAll();
     }
 
-    public Iterable<Seat> getAllSeat() {
-        return seatRepository.findAll();
-    }
-
-    public Optional<Seat> findByIdSeat(int id) {
-        return seatRepository.findById(id);
+    public static JSONObject findByIDSeat(int id) {
+        return SeatDAO.findByID(id);
     }
 }

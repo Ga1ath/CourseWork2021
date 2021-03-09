@@ -1,8 +1,7 @@
 package com.example.cinema_booking;
 
-import com.example.cinema_booking.models.Film;
-import com.example.cinema_booking.models.Hall;
-import com.example.cinema_booking.models.SessionFilm;
+
+import com.example.cinema_booking.services.CinemaService;
 import com.example.cinema_booking.services.FilmService;
 import com.example.cinema_booking.services.HallService;
 import com.example.cinema_booking.services.SessionFilmService;
@@ -11,6 +10,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 
@@ -57,15 +57,6 @@ public class Main {
 //        response_to_client.put("Genre", film_genre);
 //        response_to_client.put("Logo", film_logo);
 
-        HallService hallService = new HallService();
-        FilmService filmService = new FilmService();
-        SessionFilmService sessionFilmService = new SessionFilmService();
-        Optional<Film> film = filmService.findByIdFilm(4154756);
-        Optional<Hall> hall = hallService.findByIdHall(1);
-        sessionFilmService.addSessionFilm(new SessionFilm(
-                        "04:20",
-                        "January 14th",
-                hall.orElse(new Hall()),
-                film.orElse(new Film())));
+        SessionFilmService.addSessionFilm("14th January", 1, 6723592, "04:20");
     }
 }

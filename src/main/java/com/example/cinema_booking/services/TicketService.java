@@ -1,35 +1,28 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.models.Ticket;
-import com.example.cinema_booking.repositories.TicketRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.cinema_booking.dao.TicketDAO;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.ArrayList;
 
 
 @Service
 public class TicketService {
 
-    @Autowired
-    private TicketRepository ticketRepository;
-
-    public TicketService() {
-
+    public static void addTicket(int seatID, int sessionID, String customerID) {
+        TicketDAO.add(seatID, sessionID, customerID);
     }
 
-    public void addTicket(Ticket ticket) {
-        ticketRepository.save(ticket);
+    public static void deleteTicket(int id) {
+        TicketDAO.delete(id);
     }
 
-    public void deleteTicket(Ticket ticket) {
-        ticketRepository.delete(ticket);
+    public static ArrayList<JSONObject> getAllTickets() {
+        return TicketDAO.getAll();
     }
 
-    public Iterable<Ticket> getAllTicket() {
-        return ticketRepository.findAll();
-    }
-
-    public Optional<Ticket> findByIdTicket(int id) {
-        return ticketRepository.findById(id);
+    public static JSONObject findByIDTicket(int id) {
+        return TicketDAO.findByID(id);
     }
 }
