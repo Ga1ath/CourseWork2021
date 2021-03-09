@@ -1,34 +1,33 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.SessionFilmDAOimplementation;
-import com.example.cinema_booking.models.SessionFilm;
 
-import java.util.Collection;
+import com.example.cinema_booking.dao.SessionFilmDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
+
+@Service
 public class SessionFilmService {
-    private final SessionFilmDAOimplementation sessionFilmDAOimplementation = new SessionFilmDAOimplementation();
 
-    public SessionFilmService() {
-
+    public static void addSessionFilm(String sessionDate, int hallID,
+                                      int filmID, String sessionTime) {
+        SessionFilmDAO.add(sessionDate, hallID, filmID, sessionTime);
     }
 
-    public void addSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmDAOimplementation.add(sessionFilm);
+    public static void deleteSessionFilm(int id) {
+        SessionFilmDAO.delete(id);
     }
 
-    public void updateSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmDAOimplementation.update(sessionFilm);
+    public static ArrayList<JSONObject> getAllSessionFilms() {
+        return SessionFilmDAO.getAll();
     }
 
-    public void deleteSessionFilm(SessionFilm sessionFilm) {
-        sessionFilmDAOimplementation.delete(sessionFilm);
+    public static JSONObject findByIDSessionFilm(int id) {
+        return SessionFilmDAO.findByID(id);
     }
 
-    public Collection<SessionFilm> getAllSessionFilm() {
-        return sessionFilmDAOimplementation.getAll();
-    }
-
-    public SessionFilm findByIdSessionFilm(int id) {
-        return sessionFilmDAOimplementation.findByID(id);
+    public static ArrayList<JSONObject> findAllWhereIDEqualFilmID(int filmID) {
+        return SessionFilmDAO.findAllWhereIDEqualFilmID(filmID);
     }
 }

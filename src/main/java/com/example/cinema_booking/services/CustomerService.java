@@ -1,41 +1,29 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.CustomerDAOimplementation;
-import com.example.cinema_booking.models.Customer;
-import org.springframework.stereotype.Component;
 
-import java.util.Collection;
+import com.example.cinema_booking.dao.CustomerDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
 
-@Component
+@Service
 public class CustomerService {
-    private final CustomerDAOimplementation customerDAOimplementation = new CustomerDAOimplementation();
 
-    public CustomerService() {
-
+    public static void addCustomer(String email, String firstName, String lastName,
+                                   String loginName, String passwordHash) {
+        CustomerDAO.add(email, firstName, lastName, loginName, passwordHash);
     }
 
-    public Exception addCustomer(Customer customer) {
-        return customerDAOimplementation.add(customer);
+    public static void deleteCustomer(String loginName) {
+        CustomerDAO.delete(loginName);
     }
 
-    public Exception updateCustomer(Customer customer) {
-        return customerDAOimplementation.update(customer);
+    public static ArrayList<JSONObject> getAllCustomers() {
+        return CustomerDAO.getAll();
     }
 
-    public Exception deleteCustomer(Customer customer) {
-        return customerDAOimplementation.delete(customer);
-    }
-
-    public Collection<Customer> getAllCustomer() {
-        return customerDAOimplementation.getAll();
-    }
-
-    public Customer findByIdCustomer(int id) {
-        return customerDAOimplementation.findByID(id);
-    }
-
-    public Customer findByLoginNameCustomer(String loginName) {
-        return customerDAOimplementation.findByLoginName(loginName);
+    public static JSONObject findByIDCustomer(String loginName) {
+        return CustomerDAO.findByID(loginName);
     }
 }

@@ -1,34 +1,28 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.HallDAOimplementation;
-import com.example.cinema_booking.models.Hall;
 
-import java.util.Collection;
+import com.example.cinema_booking.dao.HallDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
+
+@Service
 public class HallService {
-    private final HallDAOimplementation hallDAOimplementation = new HallDAOimplementation();
 
-    public HallService() {
-
+    public static void addHall(short rowsNumber, int cinemaID) {
+        HallDAO.add(rowsNumber, cinemaID);
     }
 
-    public void addHall(Hall hall) {
-        hallDAOimplementation.add(hall);
+    public static void deleteHall(int id) {
+        HallDAO.delete(id);
     }
 
-    public void updateHall(Hall hall) {
-        hallDAOimplementation.update(hall);
+    public static ArrayList<JSONObject> getAllHalls() {
+        return HallDAO.getAll();
     }
 
-    public void deleteHall(Hall hall) {
-        hallDAOimplementation.delete(hall);
-    }
-
-    public Collection<Hall> getAllHall() {
-        return hallDAOimplementation.getAll();
-    }
-
-    public Hall findByIdHall(int id) {
-        return hallDAOimplementation.findByID(id);
+    public static JSONObject findByIDHall(int id) {
+        return HallDAO.findByID(id);
     }
 }

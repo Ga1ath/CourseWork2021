@@ -13,6 +13,8 @@ import Hall from "./components/Modals/Hall/Hall";
 import BlurBg from "./components/BlurBG/BlurBG";
 import { useSelector } from "react-redux";
 
+
+
 const SessionsPage = () => {
 
   let { id } = useParams();
