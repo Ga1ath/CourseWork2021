@@ -21,4 +21,7 @@ export default makeStyles((theme) => ({
 	submit: {
 		margin: theme.spacing(1, 0, 1),
 	},
+	container: {
+		minHeight: "calc(100vh - 70px)"
+	},
 }));
