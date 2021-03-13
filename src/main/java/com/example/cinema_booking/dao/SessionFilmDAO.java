@@ -1,43 +1,13 @@
 package com.example.cinema_booking.dao;
 
+import com.example.cinema_booking.dao_prototypes.BaseDAO;
+import com.example.cinema_booking.dao_prototypes.SessionFilmPrototype;
 import org.json.JSONObject;
 import java.sql.*;
 import java.util.ArrayList;
 
 
-public class SessionFilmDAO {
-
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String user = "postgres";
-    private static final String password = "root";
-    private static Connection connection;
-
-    private static ResultSet executeQuery(Statement statement, String query) {
-        try {
-            return statement.executeQuery(query);
-        } catch (SQLException throwable) {
-            System.out.println("Cannot execute query");
-            throwable.printStackTrace();
-            return null;
-        }
-    }
-
-    private static void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException throwable) {
-            System.out.println("Cannot close connection");
-            throwable.printStackTrace();
-        }
-    }
-
-    private static void openConnection() {
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException troubles) {
-            troubles.printStackTrace();
-        }
-    }
+public class SessionFilmDAO extends BaseDAO implements SessionFilmPrototype {
 
     public static void add(String sessionDate,
                            int hallID,
@@ -142,7 +112,7 @@ public class SessionFilmDAO {
                 return new JSONObject();
             }
 
-            String query = "select * from \"SessionFilm\" where \"SessionFilmID\"=" + id + ";";
+            String query = "select * from \"SessionFilm\" where \"SessionID\"=" + id + ";";
             ResultSet resultSet = executeQuery(statement, query);
 
             JSONObject result = new JSONObject();

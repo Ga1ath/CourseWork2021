@@ -1,46 +1,17 @@
 package com.example.cinema_booking.dao;
 
+import com.example.cinema_booking.dao_prototypes.BaseDAO;
+import com.example.cinema_booking.dao_prototypes.RowPrototype;
 import org.json.JSONObject;
 import java.sql.*;
 import java.util.ArrayList;
 
 
-public class RowDAO {
-
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String user = "postgres";
-    private static final String password = "root";
-    private static Connection connection;
-
-    private static ResultSet executeQuery(Statement statement, String query) {
-        try {
-            return statement.executeQuery(query);
-        } catch (SQLException throwable) {
-            System.out.println("Cannot execute query");
-            throwable.printStackTrace();
-            return null;
-        }
-    }
-
-    private static void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException throwable) {
-            System.out.println("Cannot close connection");
-            throwable.printStackTrace();
-        }
-    }
-
-    private static void openConnection() {
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException troubles) {
-            troubles.printStackTrace();
-        }
-    }
+public class RowDAO extends BaseDAO implements RowPrototype {
 
     public static void add(short seatNumber,
-                           int hallID) {
+                           int hallID,
+                           short numberInHall) {
         openConnection();
         if (connection != null) {
             Statement statement;
@@ -53,10 +24,11 @@ public class RowDAO {
             }
 
             String query = "insert into \"Row\"" +
-                    "(\"SeatNumber\", \"HallID\") " +
+                    "(\"SeatNumber\", \"HallID\", \"NumberInHall\") " +
                     "values('" +
                     seatNumber + "', '" +
-                    hallID + "');";
+                    hallID + "', '" +
+                    numberInHall + "');";
             executeQuery(statement, query);
             closeConnection();
         } else {
@@ -108,6 +80,7 @@ public class RowDAO {
                         currentRow.put("id", resultSet.getInt("RowID"));
                         currentRow.put("seatNumber", resultSet.getShort("SeatNumber"));
                         currentRow.put("hallID", resultSet.getInt("HallID"));
+                        currentRow.put("numberInHall", resultSet.getInt("NumberInHall"));
                         result.add(currentRow);
                     }
                 } catch (SQLException throwable) {
@@ -158,6 +131,43 @@ public class RowDAO {
         } else {
             System.out.println("Connection had not been opened");
             return new JSONObject();
+        }
+    }
+
+    public static ArrayList<JSONObject> getAllByHallID(int hallID) {
+        openConnection();
+        if (connection != null) {
+            Statement statement;
+            try {
+                statement = connection.createStatement();
+            } catch (SQLException throwable) {
+                System.out.println("Cannot create statement");
+                throwable.printStackTrace();
+                return new ArrayList<>();
+            }
+
+            String query = "select (\"RowID\") from \"Row\" where \"HallID\"=" + hallID + ";";
+            ResultSet resultSet = executeQuery(statement, query);
+
+            ArrayList<JSONObject> result = new ArrayList<>();
+            if (resultSet != null) {
+                try {
+                    while (resultSet.next()) {
+                        JSONObject currentRow = new JSONObject();
+                        currentRow.put("id", resultSet.getInt("RowID"));
+                        result.add(currentRow);
+                    }
+                } catch (SQLException throwable) {
+                    System.out.println("Error while getting data from cursor");
+                    throwable.printStackTrace();
+                }
+            }
+
+            closeConnection();
+            return result;
+        } else {
+            System.out.println("Connection had not been opened");
+            return new ArrayList<>();
         }
     }
 }

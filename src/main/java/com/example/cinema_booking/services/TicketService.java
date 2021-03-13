@@ -25,4 +25,8 @@ public class TicketService {
     public static JSONObject findByIDTicket(int id) {
         return TicketDAO.findByID(id);
     }
+
+    public static ArrayList<Integer> getAllTicketsBySessionID(int sessionID) {
+        return TicketDAO.getAllBySessionID(sessionID);
+    }
 }
