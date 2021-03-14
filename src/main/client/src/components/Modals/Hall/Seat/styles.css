@@ -1,10 +1,13 @@
 .seat {
     background-color: #e7e7ef;
-    height: 12px;
-    width: 15px;
+    height: 3vh;
+    width: 3vw;
     margin: 3px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    display: flex;
+    justify-content: center;
 }
 
 .bought {
