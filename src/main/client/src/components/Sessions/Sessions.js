@@ -12,16 +12,11 @@ const Sessions = ({ filmId }) => {
   const dispatch = useDispatch();
   let sessions;
 
-  const sessionsData = useSelector(state => state.filmInfo);
+  useEffect(() => {
+    dispatch(getSessions(filmId));
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(getSessions(filmId));
-  //
-  //   sessions = Object.entries(sessionsData.reduce((dates, s) => {
-  //     dates[s.date] = [...dates[s.date] || [], s];
-  //     return dates;
-  //   }, {}));
-  // }, [dispatch]);
+  const sessionsData = useSelector(state => state.filmInfo);
 
   // change data to sessionsData
   sessions = Object.entries(sessionsData.sessions.reduce((dates, s) => {

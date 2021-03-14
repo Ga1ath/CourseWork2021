@@ -1,34 +1,32 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.SeatDAOimplementation;
-import com.example.cinema_booking.models.Seat;
 
-import java.util.Collection;
+import com.example.cinema_booking.dao.SeatDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
+
+@Service
 public class SeatService {
-    private final SeatDAOimplementation seatDAOimplementation = new SeatDAOimplementation();
 
-    public SeatService() {
-
+    public static void addSeat(int rowID, String seatName) {
+        SeatDAO.add(rowID, seatName);
     }
 
-    public void addSeat(Seat seat) {
-        seatDAOimplementation.add(seat);
+    public static void deleteSeat(int id) {
+        SeatDAO.delete(id);
     }
 
-    public void updateSeat(Seat seat) {
-        seatDAOimplementation.update(seat);
+    public static ArrayList<JSONObject> getAllSeats() {
+        return SeatDAO.getAll();
     }
 
-    public void deleteSeat(Seat seat) {
-        seatDAOimplementation.delete(seat);
+    public static JSONObject findByIDSeat(int id) {
+        return SeatDAO.findByID(id);
     }
 
-    public Collection<Seat> getAllSeat() {
-        return seatDAOimplementation.getAll();
-    }
-
-    public Seat findByIdSeat(int id) {
-        return seatDAOimplementation.findByID(id);
+    public static ArrayList<JSONObject> getAllSeatsByRowID(int rowID) {
+        return SeatDAO.getAllByRowID(rowID);
     }
 }
