@@ -1,34 +1,28 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.CinemaDAOimplementation;
-import com.example.cinema_booking.models.Cinema;
 
-import java.util.Collection;
+import com.example.cinema_booking.dao.CinemaDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
+
+@Service
 public class CinemaService {
-    private final CinemaDAOimplementation cinemaDAOimplementation = new CinemaDAOimplementation();
 
-    public CinemaService() {
-
+    public static void addCinema(String address, String publicName) {
+        CinemaDAO.add(address, publicName);
     }
 
-    public void addCinema(Cinema cinema) {
-        cinemaDAOimplementation.add(cinema);
+    public static void deleteCinema(int id) {
+        CinemaDAO.delete(id);
     }
 
-    public void updateCinema(Cinema cinema) {
-        cinemaDAOimplementation.update(cinema);
+    public static ArrayList<JSONObject> getAllCinemas() {
+        return CinemaDAO.getAll();
     }
 
-    public void deleteCinema(Cinema cinema) {
-        cinemaDAOimplementation.delete(cinema);
-    }
-
-    public Collection<Cinema> getAllCinema() {
-        return cinemaDAOimplementation.getAll();
-    }
-
-    public Cinema findByIdCinema(int id) {
-        return cinemaDAOimplementation.findByID(id);
+    public static JSONObject findByIDCinema(int id) {
+        return CinemaDAO.findByID(id);
     }
 }

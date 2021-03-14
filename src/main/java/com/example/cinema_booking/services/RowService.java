@@ -1,34 +1,32 @@
 package com.example.cinema_booking.services;
 
-import com.example.cinema_booking.dao.RowDAOimplementation;
-import com.example.cinema_booking.models.Row;
 
-import java.util.Collection;
+import com.example.cinema_booking.dao.RowDAO;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
+
+@Service
 public class RowService {
-    private final RowDAOimplementation rowDAOimplementation = new RowDAOimplementation();
 
-    public RowService() {
-
+    public static void addRow(short seatNumber, int hallID, short numberInHall) {
+        RowDAO.add(seatNumber, hallID, numberInHall);
     }
 
-    public void addRow(Row row) {
-        rowDAOimplementation.add(row);
+    public static void deleteRow(int id) {
+        RowDAO.delete(id);
     }
 
-    public void updateRow(Row row) {
-        rowDAOimplementation.update(row);
+    public static ArrayList<JSONObject> getAllRows() {
+        return RowDAO.getAll();
     }
 
-    public void deleteRow(Row row) {
-        rowDAOimplementation.delete(row);
+    public static JSONObject findByIDRow(int id) {
+        return RowDAO.findByID(id);
     }
 
-    public Collection<Row> getAllRow() {
-        return rowDAOimplementation.getAll();
-    }
-
-    public Row findByIdRow(int id) {
-        return rowDAOimplementation.findByID(id);
+    public static ArrayList<JSONObject> getAllRowsByHallID(int hallID) {
+        return RowDAO.getAllByHallID(hallID);
     }
 }

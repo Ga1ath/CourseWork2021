@@ -65,6 +65,7 @@ const Auth = () => {
 									: null
 							}
 							<Input name="email" label="Email" handleChange={handleChange} type="email" />
+
 							<Input
 								name="password"
 								label="Password"

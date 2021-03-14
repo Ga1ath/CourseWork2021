@@ -1,15 +1,22 @@
 package com.example.cinema_booking;
 
+
+import com.example.cinema_booking.services.CinemaService;
+import com.example.cinema_booking.services.FilmService;
+import com.example.cinema_booking.services.HallService;
+import com.example.cinema_booking.services.SessionFilmService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.sql.SQLException;
+import java.util.Optional;
 
 
 public class Main {
     public static void main(String[] args) throws UnirestException {
-//        HttpResponse<String> response = Unirest.get("https://imdb8.p.rapidapi.com/title/auto-complete?q=avengersinfinitywar")
+//        HttpResponse<String> response = Unirest.get("https://imdb8.p.rapidapi.com/title/auto-complete?q=avengersendgame")
 //                .header("x-rapidapi-key", "f3e55c08ddmsh1a3452690bf39ecp1c7681jsnd926d8c78dde")
 //                .header("x-rapidapi-host", "imdb8.p.rapidapi.com")
 //                .asString();
@@ -50,6 +57,6 @@ public class Main {
 //        response_to_client.put("Genre", film_genre);
 //        response_to_client.put("Logo", film_logo);
 
-
+        SessionFilmService.addSessionFilm("14th January", 1, 6723592, "04:20");
     }
 }
