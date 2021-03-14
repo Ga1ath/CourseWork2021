@@ -10,6 +10,7 @@ export default makeStyles((theme) => ({
 	},
 	root: {
 		padding: theme.spacing(3),
+		paddingTop: "60px",
 	},
 	avatar: {
 		backgroundColor: "black",
@@ -22,6 +23,7 @@ export default makeStyles((theme) => ({
 		margin: theme.spacing(1, 0, 1),
 	},
 	container: {
-		minHeight: "calc(100vh - 70px)"
-	},
+		minHeight: "calc(100vh - 80px)"
+	}
+
 }));

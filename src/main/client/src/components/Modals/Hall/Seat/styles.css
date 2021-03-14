@@ -1,0 +1,19 @@
+.seat {
+    background-color: #e7e7ef;
+    height: 3vh;
+    width: 3vw;
+    margin: 3px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.bought {
+    background-color: #38383e;
+}
+
+.selected {
+    background-color: #1212f5;
+}

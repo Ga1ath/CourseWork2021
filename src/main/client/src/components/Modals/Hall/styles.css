@@ -1,10 +1,11 @@
 .hall {
     display: block;
-    height: 60px;
+    height: 50vh;
     position: fixed;
-    top: calc(50% - 30px);
+    top: calc(35% - 30px);
     left: 20vw;
     width: 60vw;
-    background-color: aqua;
+    background-color: #1d1b1b;
     z-index: 2002;
+    padding: 20px 50px 0;
 }

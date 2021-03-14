@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideHallPopup } from "../../../actions/hallPopup";
 
 import "./styles.css"
+import Row from './Row/Row';
+import { getCurrentSession } from '../../../actions/currentSession';
 
 const Hall = () => {
 	let visible = useSelector(state => state.hallPopup.visible);
@@ -15,6 +17,8 @@ const Hall = () => {
 	}
 
 	useEffect(() => {
+		dispatch(getCurrentSession());
+
 		document.addEventListener('click', clickHandler);
 		return () => {
 			document.removeEventListener('click', clickHandler);
@@ -24,8 +28,10 @@ const Hall = () => {
 
 	return (
 		<div ref={ref} className="hall">
-			{seats.map(seat => {
-				return <div>{seat}</div>
+			{seats.map((row, key) => {
+				return (
+					<Row row={row} id={key} />
+				)
 			})}
 		</div>
 	)
