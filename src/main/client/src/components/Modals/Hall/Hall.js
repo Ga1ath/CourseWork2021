@@ -4,6 +4,7 @@ import { hideHallPopup } from "../../../actions/hallPopup";
 
 import "./styles.css"
 import Row from './Row/Row';
+import { getCurrentSession } from '../../../actions/currentSession';
 
 const Hall = () => {
 	let visible = useSelector(state => state.hallPopup.visible);
@@ -16,6 +17,8 @@ const Hall = () => {
 	}
 
 	useEffect(() => {
+		dispatch(getCurrentSession());
+
 		document.addEventListener('click', clickHandler);
 		return () => {
 			document.removeEventListener('click', clickHandler);
