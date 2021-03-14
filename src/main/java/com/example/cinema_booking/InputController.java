@@ -1,9 +1,7 @@
 package com.example.cinema_booking;
 
 
-import com.example.cinema_booking.services.CustomerService;
-import com.example.cinema_booking.services.FilmService;
-import com.example.cinema_booking.services.SessionFilmService;
+import com.example.cinema_booking.services.*;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -15,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 
 @RestController
@@ -192,5 +191,50 @@ public class InputController {
         result.put("sessions", sessions);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/session", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<ArrayList<HashMap<String, Object>>>> getSeatsFromSession(
+        @RequestParam(name = "sessionID") Integer sessionID
+    ) {
+        JSONObject session = SessionFilmService.findByIDSessionFilm(sessionID);
+        ArrayList<ArrayList<HashMap<String, Object>>> response = new ArrayList<>();
+
+        if (session.length() == 0) {
+            response.add(new ArrayList<>());
+            HashMap<String, Object> cause = new HashMap<>();
+            cause.put("Cause", "Session with this sessionID does not exist");
+            response.get(0).add(cause);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
+        int hallID = session.getInt("hallID");
+        int[] session_tickets =
+                TicketService.getAllTicketsBySessionID(sessionID).
+                        stream().
+                        mapToInt(x -> x).
+                        toArray();
+        ArrayList<JSONObject> rows_in_session = RowService.getAllRowsByHallID(hallID);
+
+        for (JSONObject row : rows_in_session) {
+            ArrayList<HashMap<String, Object>> current_row = new ArrayList<>();
+            int rowID = row.getInt("id");
+            ArrayList<JSONObject> seats_in_row = SeatService.getAllSeatsByRowID(rowID);
+
+            for (JSONObject seat : seats_in_row) {
+                HashMap<String, Object> current_seat = new HashMap<>();
+                current_seat.put("name", seat.getString("seatName"));
+                if (IntStream.of(session_tickets).anyMatch(
+                        x -> x == seat.getInt("id"))) {
+                    current_seat.put("isBooked", true);
+                } else {
+                    current_seat.put("isBooked", false);
+                }
+                current_row.add(current_seat);
+            }
+            response.add(current_row);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

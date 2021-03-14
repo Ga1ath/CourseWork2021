@@ -25,4 +25,8 @@ public class SeatService {
     public static JSONObject findByIDSeat(int id) {
         return SeatDAO.findByID(id);
     }
+
+    public static ArrayList<JSONObject> getAllSeatsByRowID(int rowID) {
+        return SeatDAO.getAllByRowID(rowID);
+    }
 }

@@ -1,46 +1,17 @@
 package com.example.cinema_booking.dao;
 
+import com.example.cinema_booking.dao_prototypes.BaseDAO;
+import com.example.cinema_booking.dao_prototypes.HallPrototype;
 import org.json.JSONObject;
 import java.sql.*;
 import java.util.ArrayList;
 
 
-public class HallDAO {
-
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String user = "postgres";
-    private static final String password = "root";
-    private static Connection connection;
-
-    private static ResultSet executeQuery(Statement statement, String query) {
-        try {
-            return statement.executeQuery(query);
-        } catch (SQLException throwable) {
-            System.out.println("Cannot execute query");
-            throwable.printStackTrace();
-            return null;
-        }
-    }
-
-    private static void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException throwable) {
-            System.out.println("Cannot close connection");
-            throwable.printStackTrace();
-        }
-    }
-
-    private static void openConnection() {
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException troubles) {
-            troubles.printStackTrace();
-        }
-    }
+public class HallDAO extends BaseDAO implements HallPrototype {
 
     public static void add(short rowsNumber,
-                           int cinemaID) {
+                           int cinemaID,
+                           String hallName) {
         openConnection();
         if (connection != null) {
             Statement statement;
@@ -53,10 +24,11 @@ public class HallDAO {
             }
 
             String query = "insert into \"Hall\"" +
-                    "(\"RowsNumber\", \"CinemaID\") " +
+                    "(\"RowsNumber\", \"CinemaID\", \"HallName\") " +
                     "values('" +
                     rowsNumber + "', '" +
-                    cinemaID + "');";
+                    cinemaID + "', '" +
+                    hallName + "');";
             executeQuery(statement, query);
             closeConnection();
         } else {
@@ -108,6 +80,7 @@ public class HallDAO {
                         currentHall.put("id", resultSet.getInt("HallID"));
                         currentHall.put("rowsNumber", resultSet.getShort("RowsNumber"));
                         currentHall.put("cinemaID", resultSet.getInt("CinemaID"));
+                        currentHall.put("hallName", resultSet.getString("HallName"));
                         result.add(currentHall);
                     }
                 } catch (SQLException throwable) {
@@ -146,6 +119,7 @@ public class HallDAO {
                         result.put("id", resultSet.getInt("HallID"));
                         result.put("rowsNumber", resultSet.getShort("RowsNumber"));
                         result.put("cinemaID", resultSet.getInt("CinemaID"));
+                        result.put("hallName", resultSet.getString("HallName"));
                     }
                 } catch (SQLException throwable) {
                     System.out.println("Error while getting data from cursor");

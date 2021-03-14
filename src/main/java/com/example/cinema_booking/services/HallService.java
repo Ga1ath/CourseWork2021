@@ -10,8 +10,8 @@ import java.util.ArrayList;
 @Service
 public class HallService {
 
-    public static void addHall(short rowsNumber, int cinemaID) {
-        HallDAO.add(rowsNumber, cinemaID);
+    public static void addHall(short rowsNumber, int cinemaID, String hallName) {
+        HallDAO.add(rowsNumber, cinemaID, hallName);
     }
 
     public static void deleteHall(int id) {
