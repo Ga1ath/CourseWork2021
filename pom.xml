@@ -73,11 +73,7 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpcomponents-asyncclient</artifactId>-->
-<!--            <version>4.1.4</version>-->
-<!--        </dependency>-->
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -122,6 +118,11 @@
             <groupId>org.sonatype.sisu</groupId>
             <artifactId>sisu-inject-bean</artifactId>
             <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.3</version>
         </dependency>
     </dependencies>
 

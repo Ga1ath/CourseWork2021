@@ -5,6 +5,7 @@ import com.example.cinema_booking.services.*;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -115,10 +118,10 @@ public class InputController {
     public ResponseEntity<HashMap<String, String>> signup(
             @RequestBody Map<String, String> userInfo
     ) {
-        String loginName = userInfo.get("LoginName");
-        if (CustomerService.findByIDCustomer(loginName).length() > 0) {
+        String email = userInfo.get("Email");
+        if (CustomerService.findByIDCustomer(email).length() > 0) {
             HashMap<String, String> cause = new HashMap<>();
-            cause.put("Cause", "Customer with this LoginName already exists");
+            cause.put("Cause", "Customer with this Email already exists");
             return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
         }
 
@@ -126,7 +129,7 @@ public class InputController {
                 userInfo.get("Email"),
                 userInfo.get("FirstName"),
                 userInfo.get("LastName"),
-                loginName,
+                email,
                 passwordEncoder.encode(userInfo.get("Password")));
 
         return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
@@ -136,11 +139,11 @@ public class InputController {
     public ResponseEntity<HashMap<String, String>> signin(
             @RequestBody Map<String, String> userInfo
     ) {
-        String loginName = userInfo.get("LoginName");
-        JSONObject customer = CustomerService.findByIDCustomer(loginName);
+        String email = userInfo.get("Email");
+        JSONObject customer = CustomerService.findByIDCustomer(email);
         if (customer.length() == 0) {
             HashMap<String, String> cause = new HashMap<>();
-            cause.put("Cause", "Customer with this LoginName does not exist");
+            cause.put("Cause", "Customer with this Email does not exist");
             return new ResponseEntity<>(cause, HttpStatus.CONFLICT);
         }
 
@@ -184,6 +187,7 @@ public class InputController {
                 currentSessionFilm.put("id", sessionFilm.getInt("id"));
                 currentSessionFilm.put("date", sessionFilm.getString("sessionDate"));
                 currentSessionFilm.put("time", sessionFilm.getString("sessionTime"));
+                currentSessionFilm.put("price", sessionFilm.getInt("price"));
                 sessions.add(currentSessionFilm);
             }
         }
@@ -234,6 +238,76 @@ public class InputController {
             }
             response.add(current_row);
         }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ResponseEntity<HashMap<String, Object>> getInfoAboutCustomer(
+            @RequestParam(name = "email") String email
+    ) {
+        JSONObject customer = CustomerService.findByIDCustomer(email);
+        HashMap<String, Object> response = new HashMap<>();
+
+        if (customer.length() == 0) {
+            response.put("Cause", "Customer with this email does not exist");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
+        response.put("firstName", customer.getString("firstName"));
+        response.put("lastName", customer.getString("lastName"));
+
+        ArrayList<Integer> customer_sessions = TicketService.getAllTicketsByCustomerID(email);
+        TreeMap<Long, JSONObject> tickets_chronological = new TreeMap<>(Collections.reverseOrder());
+
+        for (int sessionID : customer_sessions) {
+            JSONObject session = SessionFilmService.findByIDSessionFilm(sessionID);
+
+            long session_time = Timestamp.valueOf(session.getString("rawTime")).getTime();
+            JSONObject film = FilmService.findByIDFilm(session.getInt("filmIMDB"));
+
+            ArrayList<Integer> seats = TicketService.getAllTicketsByCustomerSessionID(
+                    email, session.getInt("id")
+            );
+
+            JSONObject info = new JSONObject();
+
+            info.put("filmName", film.getString("filmName"));
+            info.put("logo", film.getString("logo"));
+            info.put("price", session.getInt("price") * seats.size());
+            info.put("hallName",
+                    HallService.findByIDHall(session.getInt("hallID")).
+                            getString("hallName"));
+
+            ArrayList<String> seats_names = new ArrayList<>();
+            for (int seat : seats) {
+                seats_names.add(SeatService.findByIDSeat(seat).getString("seatName"));
+            }
+            info.put("seatName", seats_names);
+
+            tickets_chronological.put(session_time, info);
+        }
+
+        ArrayList<Map<String, Object>> tickets = new ArrayList<>();
+        for (JSONObject ticket : tickets_chronological.values()) {
+            JSONArray seats = (JSONArray) ticket.get("seatName");
+            StringBuilder seats_as_string = new StringBuilder();
+            int len = seats.length();
+            for (int i = 0; i < len; i++) {
+                seats_as_string.append(seats.getString(i));
+                if (i < len - 1) {
+                    seats_as_string.append(", ");
+                }
+            }
+            tickets.add(Map.of(
+                    "filmName", ticket.getString("filmName"),
+                    "logo", ticket.getString("logo"),
+                    "price", ticket.getInt("price"),
+                    "hallName", ticket.getString("hallName"),
+                    "seatName", seats_as_string
+            ));
+        }
+        response.put("tickets", tickets);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

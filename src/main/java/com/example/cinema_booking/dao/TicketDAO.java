@@ -171,4 +171,76 @@ public class TicketDAO extends BaseDAO implements TicketPrototype {
             return new ArrayList<>();
         }
     }
+
+    public static ArrayList<Integer> getAllByCustomerID(String customerID) {
+        openConnection();
+        if (connection != null) {
+            Statement statement;
+            try {
+                statement = connection.createStatement();
+            } catch (SQLException throwable) {
+                System.out.println("Cannot create statement");
+                throwable.printStackTrace();
+                return new ArrayList<>();
+            }
+
+            String query = "select (\"SessionID\") from \"Ticket\" where \"CustomerID\"='" + customerID + "';";
+            ResultSet resultSet = executeQuery(statement, query);
+
+            ArrayList<Integer> result = new ArrayList<>();
+            if (resultSet != null) {
+                try {
+                    while (resultSet.next()) {
+                        result.add(resultSet.getInt("SessionID"));
+                    }
+                } catch (SQLException throwable) {
+                    System.out.println("Error while getting data from cursor");
+                    throwable.printStackTrace();
+                }
+            }
+
+            closeConnection();
+            return result;
+        } else {
+            System.out.println("Connection had not been opened");
+            return new ArrayList<>();
+        }
+    }
+
+    public static ArrayList<Integer> getAllByCustomerSessionID(String customerID, int sessionID) {
+        openConnection();
+        if (connection != null) {
+            Statement statement;
+            try {
+                statement = connection.createStatement();
+            } catch (SQLException throwable) {
+                System.out.println("Cannot create statement");
+                throwable.printStackTrace();
+                return new ArrayList<>();
+            }
+
+            String query = "select (\"SeatID\") from \"Ticket\" where" +
+                    " \"CustomerID\"='" + customerID + "' and " +
+                    " \"SessionID\"=" + sessionID + ";";
+            ResultSet resultSet = executeQuery(statement, query);
+
+            ArrayList<Integer> result = new ArrayList<>();
+            if (resultSet != null) {
+                try {
+                    while (resultSet.next()) {
+                        result.add(resultSet.getInt("SeatID"));
+                    }
+                } catch (SQLException throwable) {
+                    System.out.println("Error while getting data from cursor");
+                    throwable.printStackTrace();
+                }
+            }
+
+            closeConnection();
+            return result;
+        } else {
+            System.out.println("Connection had not been opened");
+            return new ArrayList<>();
+        }
+    }
 }

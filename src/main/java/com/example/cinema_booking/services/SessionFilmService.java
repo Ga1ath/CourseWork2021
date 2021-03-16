@@ -10,9 +10,11 @@ import java.util.ArrayList;
 @Service
 public class SessionFilmService {
 
-    public static void addSessionFilm(String sessionDate, int hallID,
-                                      int filmID, String sessionTime) {
-        SessionFilmDAO.add(sessionDate, hallID, filmID, sessionTime);
+    public static void addSessionFilm(int hallID,
+                                      int filmIMDB,
+                                      short price,
+                                      String sessionTimeAndDate) {
+        SessionFilmDAO.add(hallID, filmIMDB, price, sessionTimeAndDate);
     }
 
     public static void deleteSessionFilm(int id) {

@@ -57,6 +57,5 @@ public class Main {
 //        response_to_client.put("Genre", film_genre);
 //        response_to_client.put("Logo", film_logo);
 
-        SessionFilmService.addSessionFilm("14th January", 1, 6723592, "04:20");
     }
 }

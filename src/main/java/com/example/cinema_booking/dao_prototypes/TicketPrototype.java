@@ -27,4 +27,12 @@ public interface TicketPrototype {
     static ArrayList<Integer> getAllBySessionID(int sessionID) {
         return null;
     }
+
+    static ArrayList<Integer> getAllByCustomerID(String customerID) {
+        return null;
+    }
+
+    static ArrayList<Integer> getAllByCustomerSessionID(String customerID, int sessionID) {
+        return null;
+    }
 }

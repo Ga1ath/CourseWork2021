@@ -29,4 +29,13 @@ public class TicketService {
     public static ArrayList<Integer> getAllTicketsBySessionID(int sessionID) {
         return TicketDAO.getAllBySessionID(sessionID);
     }
+
+    public static ArrayList<Integer> getAllTicketsByCustomerID(String customerID) {
+        return TicketDAO.getAllByCustomerID(customerID);
+    }
+
+    public static ArrayList<Integer> getAllTicketsByCustomerSessionID(
+            String customerID, int sessionID) {
+        return TicketDAO.getAllByCustomerSessionID(customerID, sessionID);
+    }
 }

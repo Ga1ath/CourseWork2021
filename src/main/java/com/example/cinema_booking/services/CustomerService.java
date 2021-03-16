@@ -15,15 +15,15 @@ public class CustomerService {
         CustomerDAO.add(email, firstName, lastName, loginName, passwordHash);
     }
 
-    public static void deleteCustomer(String loginName) {
-        CustomerDAO.delete(loginName);
+    public static void deleteCustomer(String email) {
+        CustomerDAO.delete(email);
     }
 
     public static ArrayList<JSONObject> getAllCustomers() {
         return CustomerDAO.getAll();
     }
 
-    public static JSONObject findByIDCustomer(String loginName) {
-        return CustomerDAO.findByID(loginName);
+    public static JSONObject findByIDCustomer(String email) {
+        return CustomerDAO.findByID(email);
     }
 }

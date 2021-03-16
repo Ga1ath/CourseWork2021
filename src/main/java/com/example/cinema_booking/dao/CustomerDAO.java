@@ -40,7 +40,7 @@ public class CustomerDAO extends BaseDAO implements CustomerPrototype {
         }
     }
 
-    public static void delete(String loginName) {
+    public static void delete(String email) {
         openConnection();
         if (connection != null) {
             Statement statement;
@@ -52,8 +52,8 @@ public class CustomerDAO extends BaseDAO implements CustomerPrototype {
                 return;
             }
 
-            String query = "delete from \"Customer\" where \"LoginName\"='" +
-                    loginName + "';";
+            String query = "delete from \"Customer\" where \"Email\"='" +
+                    email + "';";
             executeQuery(statement, query);
             closeConnection();
         } else {
@@ -102,7 +102,7 @@ public class CustomerDAO extends BaseDAO implements CustomerPrototype {
         }
     }
 
-    public static JSONObject findByID(String loginName) {
+    public static JSONObject findByID(String email) {
         openConnection();
         if (connection != null) {
             Statement statement;
@@ -114,7 +114,7 @@ public class CustomerDAO extends BaseDAO implements CustomerPrototype {
                 return new JSONObject();
             }
 
-            String query = "select * from \"Customer\" where \"LoginName\"='" + loginName + "';";
+            String query = "select * from \"Customer\" where \"Email\"='" + email + "';";
             ResultSet resultSet = executeQuery(statement, query);
 
             JSONObject result = new JSONObject();

@@ -22,7 +22,7 @@ public interface CustomerPrototype {
         return null;
     }
 
-    static JSONObject findByID(String loginName) {
+    static JSONObject findByID(String email) {
         return null;
     }
 }

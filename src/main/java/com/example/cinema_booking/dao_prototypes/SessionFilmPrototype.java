@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public interface SessionFilmPrototype {
 
-    static void add(String sessionDate,
-                    int hallID,
+    static void add(int hallID,
                     int filmIMDB,
-                    String sessionTime) {
+                    short price,
+                    String sessionTimeAndDate) {
 
     }
 

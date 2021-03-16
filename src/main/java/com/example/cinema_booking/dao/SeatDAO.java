@@ -116,7 +116,6 @@ public class SeatDAO extends BaseDAO implements SeatPrototype {
                     if (resultSet.next()) {
                         result.put("id", resultSet.getInt("SeatID"));
                         result.put("rowID", resultSet.getString("RowID"));
-                        result.put("isOccupied", resultSet.getString("IsOccupied"));
                         result.put("seatName", resultSet.getString("SeatName"));
                     }
                 } catch (SQLException throwable) {
