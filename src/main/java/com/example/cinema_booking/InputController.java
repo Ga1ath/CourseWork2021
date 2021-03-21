@@ -157,7 +157,7 @@ public class InputController {
         return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/sessions", method = RequestMethod.GET)
+    @GetMapping(value = "/sessions")
     public ResponseEntity<HashMap<String, Object>> getSessionsByFilm(
             @RequestParam(name = "filmID") Integer filmID
     ) {
@@ -197,7 +197,7 @@ public class InputController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/session", method = RequestMethod.GET)
+    @GetMapping(value = "/session")
     public ResponseEntity<ArrayList<ArrayList<HashMap<String, Object>>>> getSeatsFromSession(
         @RequestParam(name = "sessionID") Integer sessionID
     ) {
@@ -242,7 +242,7 @@ public class InputController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @GetMapping(value = "/users")
     public ResponseEntity<HashMap<String, Object>> getInfoAboutCustomer(
             @RequestParam(name = "email") String email
     ) {
